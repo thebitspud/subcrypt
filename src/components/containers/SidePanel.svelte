@@ -1,7 +1,7 @@
 <script lang="ts">
   import Inspect from "../displays/Inspect.svelte";
   import Inventory from "../displays/Inventory.svelte";
-  import PlayerStats from "../displays/PlayerStats.svelte";
+  import PlayerStats from "../displays/PlayerInfo.svelte";
 
   type SidePanelTabs = "inventory" | "player";
   let currentTab: SidePanelTabs = "inventory";

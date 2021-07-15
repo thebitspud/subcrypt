@@ -2,18 +2,17 @@
   import MainPanel from "./MainPanel.svelte";
   import SidePanel from "./SidePanel.svelte";
   import Footer from "../Footer.svelte";
-
-  let leftSidePanel = true;
+  import { settings } from "../../stores/settings";
 </script>
 
 <main>
   <div class="game">
-    {#if leftSidePanel}
-      <SidePanel />
+    {#if $settings.rightSidePanel}
       <MainPanel />
+      <SidePanel />
     {:else}
-      <MainPanel />
       <SidePanel />
+      <MainPanel />
     {/if}
   </div>
 
@@ -34,7 +33,7 @@
     padding: 0.5rem;
   }
 
-  /* Horizontal flexbox for main and side panel */
+  /* Horizontal flexbox for main and side containers */
   .game {
     display: flex;
     flex-flow: row wrap;
@@ -45,7 +44,7 @@
 
   .game > :global(div) {
     margin: 0.5rem;
-    outline: #333333 1px solid;
+    outline: var(--main-color) 1px solid;
     padding: 0.5rem;
   }
 </style>
