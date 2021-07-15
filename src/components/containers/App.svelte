@@ -1,7 +1,7 @@
 <script lang="ts">
   import MainPanel from "./MainPanel.svelte";
   import SidePanel from "./SidePanel.svelte";
-  import Footer from "./Footer.svelte";
+  import Footer from "../Footer.svelte";
 
   let leftSidePanel = true;
 </script>
@@ -21,20 +21,24 @@
 </main>
 
 <style>
+  /* Vertical flexbox for game content + footer */
   main {
     display: flex;
     flex-flow: column nowrap;
 
+    /* Ensures game content reliably fills but does not overflow screen unless
+		 * minimum space requirements exceed screen dimensions */
     box-sizing: border-box;
     height: 100%;
     min-width: 20rem;
     padding: 0.5rem;
   }
 
+  /* Horizontal flexbox for main and side panel */
   .game {
     display: flex;
-    flex: 1 auto;
     flex-flow: row wrap;
+    flex: 1 auto; /* Makes game content fill screen space not occupied by footer */
 
     max-width: 100%;
   }

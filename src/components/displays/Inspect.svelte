@@ -1,7 +1,7 @@
 <script lang="ts">
 </script>
 
-<div class="Inspect">Inspect Data</div>
+<div class="Inspect">Inspect</div>
 
 <style>
   .Inspect {
