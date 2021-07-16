@@ -1,8 +1,8 @@
 <script lang="ts">
   import MainPanel from "./MainPanel.svelte";
   import SidePanel from "./SidePanel.svelte";
-  import Footer from "../Footer.svelte";
-  import { settings } from "../../stores/settings";
+  import Footer from "./Footer.svelte";
+  import { settings } from "../../scripts/stores/settings";
 </script>
 
 <main>
@@ -44,7 +44,7 @@
 
   .game > :global(div) {
     margin: 0.5rem;
-    outline: var(--main-color) 1px solid;
+    outline: var(--border-color) 1px solid;
     padding: 0.5rem;
   }
 </style>

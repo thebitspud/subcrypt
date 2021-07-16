@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { settings } from "../../stores/settings";
+  import { settings } from "../../scripts/stores/settings";
 </script>
 
 <div class="Settings">
@@ -23,6 +23,8 @@
     :root {
       --main-color: #fff;
       --bg-color: #181818;
+      --border-color: #aaa;
+      --link-color: #28f;
     }
   </style>
 {/if}

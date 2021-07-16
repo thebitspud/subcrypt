@@ -1,7 +1,8 @@
 :root {
   --main-color: #222;
+  --border-color: #666;
   --bg-color: #fff;
-  --disabled-color: #999;
+  --link-color: #04b;
 }
 
 html,

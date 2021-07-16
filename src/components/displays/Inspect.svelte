@@ -6,6 +6,6 @@
 <style>
   .Inspect {
     padding: 0.5rem;
-    outline: var(--main-color) 1px solid;
+    outline: var(--border-color) 1px solid;
   }
 </style>
