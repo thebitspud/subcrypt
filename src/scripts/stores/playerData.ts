@@ -2,6 +2,20 @@ import { writable } from "svelte/store";
 import Resource from "../types/resources";
 import PlayerGear from "../types/playerGear";
 
+const energyRegenTimer = setInterval(() => {
+  playerData.update((p) => {
+    p.energy.adjust(1);
+    return p;
+  });
+}, 300);
+
+const healthRegenTimer = setInterval(() => {
+  playerData.update((p) => {
+    p.health.adjust(1);
+    return p;
+  });
+}, 1000);
+
 export type PlayerDataType = {
   health: Resource;
   energy: Resource;

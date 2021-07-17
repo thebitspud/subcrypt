@@ -10,6 +10,8 @@
 
 <div class="Footer">
   <button class="text" on:click={openSettings}>settings</button>
+  <button class="text" on:click={save}>save</button>
+  <button class="text" on:click={load}>load</button>
   <button class="text" on:click={openCredits}>credits</button>
   <a
     draggable="false"
@@ -17,8 +19,6 @@
     rel="noreferrer"
     target="_blank">github</a
   >
-  <button class="text" on:click={save}>save</button>
-  <button class="text" on:click={load}>load</button>
 </div>
 
 <style>
@@ -33,8 +33,8 @@
   }
 
   .Footer > * {
-    flex: 0 0 7rem;
-    margin-bottom: 0.5rem;
+    flex: 0 0 auto;
+    margin: 0 min(2rem, 5%) 0.5rem;
     color: var(--link-color);
     user-select: none;
   }

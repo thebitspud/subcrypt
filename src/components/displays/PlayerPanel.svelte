@@ -3,9 +3,9 @@
 
   function modifyStats() {
     $player.health.max += 5;
-    $player.health.adjust(2.5);
     $player.energy.max += 10;
-    $player.energy.adjust($player.energy.max / 20 - 10);
+    $player.health.adjust(-10);
+    $player.energy.adjust(-20);
     $player.weight.adjust(1);
   }
 
@@ -33,13 +33,15 @@
   <br />
   <p>Primary: {$player.gear.getSlot("primary") ?? ""}</p>
   <p>Secondary: {$player.gear.getSlot("secondary") ?? ""}</p>
+  <br />
   <p>Head: {$player.gear.getSlot("head") ?? ""}</p>
   <p>Body: {$player.gear.getSlot("body") ?? ""}</p>
   <p>Legs: {$player.gear.getSlot("legs") ?? ""}</p>
   <p>Feet: {$player.gear.getSlot("feet") ?? ""}</p>
-
-  <button on:click={modifyStats}>Modify stats</button>
-  <button on:click={pickupGear}>Pick up gear</button>
+  <br />
+  <button on:click={modifyStats}>Modify stats</button><button
+    on:click={pickupGear}>Pick up gear</button
+  >
 </div>
 
 <style>

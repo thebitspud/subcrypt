@@ -62,6 +62,12 @@
   .content {
     flex: 1 0 0; /* flex-basis must be 0 or content will overflow incorrectly */
     overflow: auto; /* overflow-y must also be one of auto, scroll, or hidden */
+    width: min(20rem, 100%);
+    margin: 0 auto 0.5rem;
+  }
+
+  .content > :global(div) {
+    text-align: left;
   }
 
   /* Tab Display */
@@ -70,7 +76,7 @@
     flex-flow: row nowrap;
     flex: 0 0 auto;
     justify-content: space-evenly;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
   }
 
   .tabs > button {

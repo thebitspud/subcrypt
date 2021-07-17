@@ -20,6 +20,7 @@ body {
   color: var(--main-color);
   text-align: center;
   font-family: "Courier New", Monospaced, monospace;
+  font-size: 15px;
 }
 
 label {
