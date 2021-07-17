@@ -1,7 +1,7 @@
 <script lang="ts">
 </script>
 
-<div class="PlayerStats">Player Stats</div>
+<div class="SkillsPanel">Skills</div>
 
 <style>
 </style>

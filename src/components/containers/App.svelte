@@ -1,23 +1,35 @@
 <script lang="ts">
-  import MainPanel from "./MainPanel.svelte";
-  import SidePanel from "./SidePanel.svelte";
+  import MainContainer from "./MainContainer.svelte";
+  import SideContainer from "./SideContainer.svelte";
   import Footer from "./Footer.svelte";
   import { settings } from "../../scripts/stores/settings";
 </script>
 
 <main>
-  <div class="game">
+  <div class="game-container">
     {#if $settings.rightSidePanel}
-      <MainPanel />
-      <SidePanel />
+      <MainContainer />
+      <SideContainer />
     {:else}
-      <SidePanel />
-      <MainPanel />
+      <SideContainer />
+      <MainContainer />
     {/if}
   </div>
 
   <Footer />
 </main>
+
+{#if $settings.darkMode}
+  <style>
+    /* Dark Mode colors */
+    :root {
+      --main-color: #fff;
+      --bg-color: #181818;
+      --border-color: #aaa;
+      --link-color: #28f;
+    }
+  </style>
+{/if}
 
 <style>
   /* Vertical flexbox for game content + footer */
@@ -33,16 +45,14 @@
     padding: 0.5rem;
   }
 
-  /* Horizontal flexbox for main and side containers */
-  .game {
+  /* Horizontal flexbox for main and side panels */
+  .game-container {
     display: flex;
     flex-flow: row wrap;
-    flex: 1 auto; /* Makes game content fill screen space not occupied by footer */
-
-    max-width: 100%;
+    flex: 1 0 auto; /* Makes game content fill screen space not occupied by footer */
   }
 
-  .game > :global(div) {
+  .game-container > :global(div) {
     margin: 0.5rem;
     outline: var(--border-color) 1px solid;
     padding: 0.5rem;

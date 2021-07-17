@@ -5,19 +5,19 @@ function createInventory() {
 
   /**
    * Adds the specified item to the player's inventory
-   * @param id the identifier of the item to be added
+   * @param id the identifier of the item to be added, or undefined to do nothing
    * @param qty (optional, default: 1) the quantity of the given item to add
    */
-  function addItem(id: string, qty?: number) {
+  function addItem(id: string | undefined, qty?: number) {
+    if (!id) return;
     const addCount = qty ?? 1;
     if (addCount <= 0) {
       // Converting negative quantity requests to item removal
       removeItem(id, -addCount);
+      return;
     } else {
       update((i) => {
-        // x ?? y is shorthand for x ? x : y
         i.set(id, (i.get(id) ?? 0) + addCount);
-
         return i;
       });
     }
@@ -25,10 +25,11 @@ function createInventory() {
 
   /**
    * If possible, removes the specified item from the player's inventory
-   * @param id the identifier of the item to be removed
+   * @param id the identifier of the item to be removed, or undefined to do nothing
    * @param qty (optional, default: all) the quantity of the given item to remove
    */
-  function removeItem(id: string, qty?: number) {
+  function removeItem(id: string | undefined, qty?: number) {
+    if (!id) return;
     const removeCount = qty ?? 1;
     if (removeCount <= 0) {
       // Converting negative quantity requests to item addition
@@ -48,11 +49,12 @@ function createInventory() {
 
   /**
    * Checks if the player has the specified item in their inventory
-   * @param id the identifier of the item to check for
+   * @param id the identifier of the item to check for, or undefined to return false
    * @param qty (optional, default: 1) the quantity of the given item in the player's inventory
    * required for the query to return true
    */
-  function hasItem(id: string, qty?: number): boolean {
+  function hasItem(id: string | undefined, qty?: number): boolean {
+    if (!id) return false;
     const adjustedMin = Math.max(qty ?? 1, 1);
 
     // Can't access the store here using $ so I have to do it like this
@@ -64,9 +66,7 @@ function createInventory() {
     return queryReturn;
   }
 
-  /**
-   * Clears the player's entire inventory
-   */
+  /** Clears the player's entire inventory */
   function reset() {
     update((i) => {
       i.clear();
@@ -83,4 +83,5 @@ function createInventory() {
   };
 }
 
+/** The player's inventory as a writable store, including built-in utility functions */
 export const playerInventory = createInventory();

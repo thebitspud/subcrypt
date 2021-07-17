@@ -2,11 +2,11 @@
   import { settings } from "../../scripts/stores/settings";
 </script>
 
-<div class="Settings">
+<div class="SettingsDisplay">
   <h2>Settings</h2>
   <label>
     <input type="checkbox" bind:checked={$settings.rightSidePanel} />
-    Side Panel on Right
+    Right/Bottom Side Panel
   </label>
   <label>
     <input type="checkbox" bind:checked={$settings.darkMode} />
@@ -18,13 +18,8 @@
   </label>
 </div>
 
-{#if $settings.darkMode}
-  <style>
-    :root {
-      --main-color: #fff;
-      --bg-color: #181818;
-      --border-color: #aaa;
-      --link-color: #28f;
-    }
-  </style>
-{/if}
+<style>
+  label {
+    display: block;
+  }
+</style>
