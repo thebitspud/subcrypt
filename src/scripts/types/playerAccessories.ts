@@ -2,15 +2,11 @@ import { playerInventory } from "../stores/inventory";
 
 class PlayerAccessories {
   public max: number;
-  private list: string[];
+  public list: string[];
 
   constructor(max: number) {
     this.list = [];
     this.max = max;
-  }
-
-  public count() {
-    return this.list.length;
   }
 
   public maxEquipped() {
@@ -20,6 +16,7 @@ class PlayerAccessories {
   public add(id: string) {
     if (this.list.length >= this.max) return;
     if (!playerInventory.hasItem(id)) return;
+    if (this.list.findIndex((item) => item === id) !== -1) return;
 
     playerInventory.removeItem(id, 1);
     this.list.push(id);
@@ -29,7 +26,7 @@ class PlayerAccessories {
     const itemIndex = this.list.findIndex((item) => item === id);
     if (itemIndex === -1) return;
 
-    this.list.splice(itemIndex);
+    this.list.splice(itemIndex, 1);
     playerInventory.addItem(id);
   }
 

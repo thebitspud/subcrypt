@@ -1,17 +1,19 @@
 <script lang="ts">
   import InspectPanel from "../displays/InspectPanel.svelte";
   import InventoryPanel from "../displays/InventoryPanel.svelte";
-  import PlayerPanel from "../displays/PlayerPanel.svelte";
+  import StatsPanel from "../displays/StatsPanel.svelte";
   import SkillsPanel from "../displays/SkillsPanel.svelte";
+  import GearPanel from "../displays/GearPanel.svelte";
 
   // Tab keys and display values
-  type SidePanelTabs = "player" | "inventory" | "skills";
+  type SidePanelTabs = "stats" | "gear" | "inventory" | "skills";
   const tabList = new Map<SidePanelTabs, string>([
-    ["player", "Player"],
-    ["inventory", "Inven."],
-    ["skills", "Skills"],
+    ["stats", "Stat"],
+    ["gear", "Gear"],
+    ["inventory", "Inv."],
+    ["skills", "Skill"],
   ]);
-  let currentTab: SidePanelTabs = "player";
+  let currentTab: SidePanelTabs = "stats";
 </script>
 
 <div class="SideContainer">
@@ -26,10 +28,12 @@
       {/each}
     </div>
     <div class="content">
-      {#if currentTab === "inventory"}
+      {#if currentTab === "stats"}
+        <StatsPanel />
+      {:else if currentTab === "gear"}
+        <GearPanel />
+      {:else if currentTab === "inventory"}
         <InventoryPanel />
-      {:else if currentTab === "player"}
-        <PlayerPanel />
       {:else if currentTab === "skills"}
         <SkillsPanel />
       {/if}
@@ -68,6 +72,10 @@
 
   .content > :global(div) {
     text-align: left;
+  }
+
+  .content > :global(div p) {
+    margin-bottom: 0.1rem;
   }
 
   /* Tab Display */

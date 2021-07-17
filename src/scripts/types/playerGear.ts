@@ -21,6 +21,10 @@ class PlayerGear {
     this.accessories = accessories ?? new PlayerAccessories(3);
   }
 
+  public count() {
+    return this.slots.size + this.accessories.list.length;
+  }
+
   public getSlot(slot: GearCategories) {
     return this.slots.get(slot);
   }

@@ -6,7 +6,7 @@
 </script>
 
 <div class="MainContainer">
-  <h1>Subcrypt</h1>
+  <h1>subcrypt</h1>
   <p>A text-based adventure by thebitspud.</p>
   <p>Version {pkg.version}</p>
   <button on:click={newGame} style="margin: 0.5rem auto 1rem">New Game</button>

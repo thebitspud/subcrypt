@@ -1,42 +1,41 @@
 <script lang="ts">
   import { playerInventory as inven } from "../../scripts/stores/inventory";
 
-  let disabled;
-  $: disabled = $inven && inven.hasItem("hasheensheen");
+  function craft() {
+    if (inven.hasItem("iron-longsword", 3)) {
+      inven.removeItem("iron-longsword", 3);
+      inven.addItem("armored-drip");
+      inven.addItem("hasheensheen");
+    } else if (inven.hasItem("iron-ingot", 3)) {
+      inven.removeItem("iron-ingot", 3);
+      inven.addItem("iron-longsword");
+      if (Math.random() < 1 / 3) inven.addItem("sus-proof-vest");
+      else if (Math.random() < 1 / 2) inven.addItem("vent-greaves");
+      else inven.addItem("amogus-pants");
+    } else if (inven.hasItem("raw-iron-ore", 2)) {
+      inven.removeItem("raw-iron-ore", 2);
+      inven.addItem("iron-ingot");
+      if (Math.random() < 1 / 8) inven.addItem("impostors-bane");
+      else if (Math.random() < 1 / 7) inven.addItem("task-list");
+    } else {
+      inven.addItem("raw-iron-ore", 1);
+      if (Math.random() < 1 / 16) inven.addItem("crewmate-helm");
+      else if (Math.random() < 1 / 25) inven.addItem("sussy-charm");
+    }
+  }
 
   function hasheensheen() {
-    inven.addItem("raw-iron-ore", 5);
-    inven.addItem("crewmate-helm", 1);
-
-    while (inven.hasItem("raw-iron-ore", 3)) {
-      inven.removeItem("raw-iron-ore", 3);
-      inven.addItem("iron-ingot");
-      inven.addItem("impostors-bane", 1);
-    }
-
-    if (inven.hasItem("iron-ingot", 4)) {
-      inven.removeItem("iron-ingot", 4);
-      inven.addItem("amogian-vest", 1);
-      inven.addItem("sus-greaves");
-      inven.addItem("iron-longsword");
-    }
-
-    if (inven.hasItem("iron-longsword", 5)) {
-      inven.removeItem("iron-longsword", 5);
-      inven.addItem("armored-drip", 1);
-      inven.addItem("hasheensheen");
-    }
+    for (let i = 0; i < 31; i++) craft();
   }
 </script>
 
 <div class="InventoryPanel">
+  <button on:click={craft}>Craft Few</button>
+  <button on:click={hasheensheen}>Craft Many</button>
+  <br />
   {#each [...$inven] as [id, qty]}
     <p>{id}{@html qty !== 1 ? ` &times; ${qty}` : ""}</p>
   {/each}
-
-  {#if !disabled}
-    <button on:click={hasheensheen}>Craft Items</button>
-  {/if}
 </div>
 
 <style>
