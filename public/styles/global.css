@@ -1,28 +1,40 @@
 :root {
-  --main-color: #222;
-  --border-color: #666;
-  --bg-color: #fff;
-  --link-color: #04b;
+	--main-color: #222;
+	--border-color: #666;
+	--bg-color: #fff;
+	--link-color: #04b;
 }
 
 html,
 body {
-  position: relative;
-  width: 100%;
-  height: 100%;
+	position: relative;
+	width: 100%;
+	height: 100%;
 }
 
 body {
-  box-sizing: border-box;
-  margin: 0;
+	font-family: "Courier New", Monospaced, monospace;
+	font-size: 15px;
 
-  background-color: var(--bg-color);
-  color: var(--main-color);
-  text-align: center;
-  font-family: "Courier New", Monospaced, monospace;
-  font-size: 15px;
+	box-sizing: border-box;
+	margin: 0;
+	text-align: center;
+	color: var(--main-color);
+	background-color: var(--bg-color);
 }
 
 label {
-  display: block;
+	display: block;
+}
+
+/* Vertical flexbox setup that makes overflowing flex elements render correctly */
+.overflow-wrapper {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+.overflow-wrapper > .flex-overflow {
+	flex: 1 0 0; /* flex-basis must be 0 or content will overflow incorrectly */
+	overflow: auto; /* overflow-y must also be one of auto, scroll, or hidden */
+	word-break: break-word; /* Stops extremely long words from horizontally stretching flexbox */
 }

@@ -1,25 +1,25 @@
 <script lang="ts">
-  import { settings } from "../../scripts/stores/settings";
+	import { settings } from "../../scripts/stores/settings";
 </script>
 
 <div class="SettingsDisplay">
-  <h2>Settings</h2>
-  <label>
-    <input type="checkbox" bind:checked={$settings.rightSidePanel} />
-    Right/Bottom Side Panel
-  </label>
-  <label>
-    <input type="checkbox" bind:checked={$settings.darkMode} />
-    Dark Mode
-  </label>
-  <label>
-    <input type="checkbox" bind:checked={$settings.gameHints} />
-    Gameplay Hints
-  </label>
+	<h2>Settings</h2>
+	<label>
+		<input type="checkbox" bind:checked={$settings.rightSidePanel} />
+		Right/Bottom Side Panel
+	</label>
+	<label>
+		<input type="checkbox" bind:checked={$settings.darkMode} />
+		Dark Mode
+	</label>
+	<label>
+		<input type="checkbox" bind:checked={$settings.gameHints} />
+		Gameplay Hints
+	</label>
 </div>
 
 <style>
-  label {
-    display: block;
-  }
+	label {
+		display: block;
+	}
 </style>
