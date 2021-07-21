@@ -1,16 +1,20 @@
-import { playerInventory } from "../stores/inventory";
-
 /** Utility class for managing the player's equipped accessories */
+import type PlayerInventory from "./playerInventory";
+
 class PlayerAccessories {
+	private inven: PlayerInventory;
 	public max: number;
 	public list: string[];
 
 	/**
-	 * Creates an empty accessory list with the specified number of slots
+	 * Creates an accessory list according to the specified parameters
+	 * @param inven
 	 * @param max number of accessories that can be equipped at once
+	 * @param list (optional, default: empty) manually configured list of initial accessories
 	 */
-	constructor(max: number) {
-		this.list = [];
+	constructor(inven: PlayerInventory, max: number, list?: string[]) {
+		this.inven = inven;
+		this.list = list ?? [];
 		this.max = max;
 	}
 
@@ -22,10 +26,10 @@ class PlayerAccessories {
 	 */
 	public add(id: string) {
 		if (this.list.length >= this.max) return;
-		if (!playerInventory.hasItem(id)) return;
+		if (!this.inven.hasItem(id)) return;
 		if (this.list.findIndex((item) => item === id) !== -1) return;
 
-		playerInventory.removeItem(id, 1);
+		this.inven.removeItem(id, 1);
 		this.list.push(id);
 	}
 
@@ -39,7 +43,7 @@ class PlayerAccessories {
 		if (itemIndex === -1) return;
 
 		this.list.splice(itemIndex, 1);
-		playerInventory.addItem(id);
+		this.inven.addItem(id);
 	}
 
 	/**
@@ -61,7 +65,7 @@ class PlayerAccessories {
 
 	/** Unequips all accessories and returns them to the player's inventory */
 	public reset() {
-		this.list.forEach((item) => playerInventory.addItem(item));
+		this.list.forEach((item) => this.inven.addItem(item));
 		this.list = [];
 	}
 }

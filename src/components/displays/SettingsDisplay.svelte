@@ -8,18 +8,14 @@
 		<input type="checkbox" bind:checked={$settings.rightSidePanel} />
 		Right/Bottom Side Panel
 	</label>
+	<br />
 	<label>
 		<input type="checkbox" bind:checked={$settings.darkMode} />
 		Dark Mode
 	</label>
+	<br />
 	<label>
 		<input type="checkbox" bind:checked={$settings.gameHints} />
 		Gameplay Hints
 	</label>
 </div>
-
-<style>
-	label {
-		display: block;
-	}
-</style>

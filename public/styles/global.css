@@ -23,10 +23,6 @@ body {
 	background-color: var(--bg-color);
 }
 
-label {
-	display: block;
-}
-
 /* Vertical flexbox setup that makes overflowing flex elements render correctly */
 .overflow-wrapper {
 	display: flex;
