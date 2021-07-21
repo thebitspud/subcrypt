@@ -1,11 +1,10 @@
 import { writable } from "svelte/store";
-import Resource from "../resources";
+import Resource, { PlayerResources } from "../player/resources";
 import PlayerInventory from "../player/playerInventory";
 import PlayerGear from "../player/playerGear";
 import PlayerAccessories from "../player/playerAccessories";
 
 // Temporary timers for resource regeneration
-// TODO: move these somewhere else
 const energyRegenTimer = setInterval(() => {
 	resources.update((resources) => {
 		resources.energy.adjust(1);
@@ -19,12 +18,6 @@ const healthRegenTimer = setInterval(() => {
 		return resources;
 	});
 }, 1000);
-
-type PlayerResources = {
-	health: Resource;
-	energy: Resource;
-	weight: Resource;
-};
 
 export const resources = writable<PlayerResources>({
 	health: new Resource(100),

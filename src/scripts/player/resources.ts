@@ -1,3 +1,9 @@
+export type PlayerResources = {
+	health: Resource;
+	energy: Resource;
+	weight: Resource;
+};
+
 /** A generic class for constrained numerical resources */
 class Resource {
 	public now: number;

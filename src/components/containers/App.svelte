@@ -7,13 +7,9 @@
 
 <main>
 	<div class="game-container">
-		{#if $settings.rightSidePanel}
-			<MainContainer />
-			<SideContainer />
-		{:else}
-			<SideContainer />
-			<MainContainer />
-		{/if}
+		{#if !$settings.rightSidePanel}<SideContainer />{/if}
+		<MainContainer />
+		{#if $settings.rightSidePanel}<SideContainer />{/if}
 	</div>
 
 	<Footer />
