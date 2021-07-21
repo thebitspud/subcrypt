@@ -1,4 +1,4 @@
-type ColorProfile = "default" | "faint" | "red" | "blue" | "green";
+type ColorProfile = "default" | "faint" | "red" | "blue" | "green" | "purple";
 
 /** Type for option buttons that play subsequent events when clicked */
 type EventOption = {
@@ -14,13 +14,13 @@ abstract class GameEvent {
 	/**
 	 * Creates a new game event according to the specified parameters
 	 * @param text Text data paragraph to be displayed when event is played
+	 * 	 * @param textColor (optional, default: CSS main-color) Color of printed text
 	 * @param textSpeed (optional, default: 50) Time (in ms) taken to print each consecutive character
-	 * @param textColor (optional, default: CSS main-color) Color of printed text
 	 */
 	constructor(
 		public readonly text: string,
-		public readonly textSpeed = 50,
-		public readonly textColor: ColorProfile = "default"
+		public readonly textColor: ColorProfile = "default",
+		public readonly textSpeed = 50
 	) {}
 
 	/**

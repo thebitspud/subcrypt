@@ -1,8 +1,16 @@
 <script lang="ts">
-	import { resources, inventory as inven, gear, accessories } from "../../scripts/stores/player";
+	import {
+		resources,
+		inventory as inven,
+		gear,
+		accessories,
+	} from "../../../scripts/stores/player";
 
 	function pickupGear() {
-		if ($inven.hasItem("hasheensheen") || $gear.getSlot("primary") === "hasheensheen") {
+		if (
+			$inven.hasItem("hasheensheen") ||
+			$gear.getSlot("primary") === "hasheensheen"
+		) {
 			$gear.setSlot("primary", "hasheensheen");
 			$gear.setSlot("secondary", "impostors-bane");
 		} else {

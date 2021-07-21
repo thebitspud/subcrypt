@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { inspectTarget } from "../../scripts/stores/inspectTarget";
-	import { settings } from "../../scripts/stores/settings";
+	import { inspectTarget } from "../../../scripts/stores/inspectTarget";
+	import { settings } from "../../../scripts/stores/settings";
 
 	$: {
 		if ($settings.gameHints && !$inspectTarget.id) {
@@ -20,7 +20,8 @@
 			<p>What is this {$inspectTarget.id} supposed do? Kill me?</p>
 		{:else if $inspectTarget.type === "help"}
 			<p>
-				Click on item, enemy, and ability names (usually colorful text) to learn more about them!
+				Click on item, enemy, and ability names (usually colorful text) to learn
+				more about them!
 			</p>
 		{/if}
 	</div>

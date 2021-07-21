@@ -1,9 +1,9 @@
 <script lang="ts">
-	import InspectPanel from "../displays/InspectPanel.svelte";
-	import InventoryPanel from "../displays/InventoryPanel.svelte";
-	import StatsPanel from "../displays/StatsPanel.svelte";
-	import SkillsPanel from "../displays/SkillsPanel.svelte";
-	import GearPanel from "../displays/GearPanel.svelte";
+	import InspectPanel from "../displays/side-panels/InspectPanel.svelte";
+	import InventoryPanel from "../displays/side-panels/InventoryPanel.svelte";
+	import StatsPanel from "../displays/side-panels/StatsPanel.svelte";
+	import SkillsPanel from "../displays/side-panels/SkillsPanel.svelte";
+	import GearPanel from "../displays/side-panels/GearPanel.svelte";
 
 	// Tab keys and display values
 	type SidePanelTabs = "stats" | "gear" | "inventory" | "skills";
@@ -20,8 +20,10 @@
 	<div class="overflow-wrapper">
 		<div class="tabs">
 			{#each [...tabList.keys()] as tab}
-				<button class:selected={currentTab === tab} on:click={() => (currentTab = tab)} class="text"
-					>{tabList.get(tab)}</button
+				<button
+					class:selected={currentTab === tab}
+					on:click={() => (currentTab = tab)}
+					class="text">{tabList.get(tab)}</button
 				>
 			{/each}
 		</div>

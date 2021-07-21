@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { resources, gear } from "../../scripts/stores/player";
-	import Resource from "../../scripts/player/resources";
+	import { resources, gear } from "../../../scripts/stores/player";
+	import Resource from "../../../scripts/player/resources";
 
 	function modifyStats() {
 		if ($resources.health.now >= 10) {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { inventory as inven } from "../../scripts/stores/player";
+	import { inventory as inven } from "../../../scripts/stores/player";
 
 	function craft() {
 		if ($inven.hasItem("iron-longsword", 3)) {
