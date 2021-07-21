@@ -5,11 +5,18 @@
  * @param delay Time (in ms) between node being displayed and effect starting
  * @param cursor Whether to append a visual text cursor while the transition is active
  */
-export const typewriter = (node: HTMLElement, { speed = 50, delay = 0, cursor = true }) => {
-	const valid = node.childNodes.length === 1 && node.childNodes[0].nodeType === Node.TEXT_NODE;
+const typewriter = (
+	node: HTMLElement,
+	{ speed = 50, delay = 0, cursor = true }
+) => {
+	const valid =
+		node.childNodes.length === 1 &&
+		node.childNodes[0].nodeType === Node.TEXT_NODE;
 
 	if (!valid) {
-		throw new Error(`This transition only works on elements with a single text node child.`);
+		throw new Error(
+			`This transition only works on elements with a single text node child.`
+		);
 	}
 
 	const text = node.textContent ?? "";
@@ -26,3 +33,5 @@ export const typewriter = (node: HTMLElement, { speed = 50, delay = 0, cursor = 
 		css: () => `white-space: pre`,
 	};
 };
+
+export default typewriter;

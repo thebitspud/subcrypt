@@ -1,22 +1,25 @@
 /** Combination type consisting of all valid gear slot names */
 import type PlayerInventory from "./playerInventory";
 
-export type GearCategories = "primary" | "secondary" | "head" | "body" | "legs" | "feet";
+export type GearCategories =
+	| "primary"
+	| "secondary"
+	| "head"
+	| "body"
+	| "legs"
+	| "feet";
 
 /** Utility class for managing the player's gear slots */
 class PlayerGear {
-	private inven: PlayerInventory;
-	private slots: Map<GearCategories, string>;
-
 	/**
 	 * Creates a new gear profile for the player according to the specified parameters
-	 * @param inven
+	 * @param inven Reference to inventory object to operate on
 	 * @param slots (optional, default: empty) manually configured list of filled gear slots
 	 */
-	constructor(inven: PlayerInventory, slots?: Map<GearCategories, string>) {
-		this.inven = inven;
-		this.slots = slots ?? new Map<GearCategories, string>();
-	}
+	constructor(
+		private inven: PlayerInventory,
+		private slots = new Map<GearCategories, string>()
+	) {}
 
 	/** Returns the total number of items currently equipped */
 	public count() {

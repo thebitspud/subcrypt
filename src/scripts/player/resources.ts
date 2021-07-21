@@ -7,19 +7,15 @@ export type PlayerResources = {
 /** A generic class for constrained numerical resources */
 class Resource {
 	public now: number;
-	public max: number;
-	public min: number;
 
 	/**
 	 * Creates a new Resource according to the specified parameters
 	 * @param base initial quantity of the resource
-	 * @param max (optional) upper constraint for resource quantity
-	 * @param min (optional) lower constraint for resource quantity
+	 * @param max (optional, default: base) upper constraint for resource quantity
+	 * @param min (optional, default: 0) lower constraint for resource quantity
 	 */
-	constructor(base: number, max = base, min = 0) {
+	constructor(base: number, public max = base, public min = 0) {
 		this.now = base;
-		this.max = max;
-		this.min = min;
 	}
 
 	/**

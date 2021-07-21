@@ -1,15 +1,11 @@
 /** Utility class for managing the player's general inventory */
 class PlayerInventory {
-	public items: Map<string, number>;
-
 	/**
 	 * Creates a new inventory for the player according to the specified parameters
-	 * @param list (optional, default: empty) manually configured Map of initial inventory
+	 * @param items (optional, default: empty) manually configured Map of initial inventory
 	 * items and quantities
 	 */
-	constructor(list?: Map<string, number>) {
-		this.items = list ?? new Map();
-	}
+	constructor(public items: Map<string, number> = new Map()) {}
 
 	/**
 	 * Adds the specified item to the player's inventory

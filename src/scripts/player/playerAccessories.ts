@@ -2,21 +2,17 @@
 import type PlayerInventory from "./playerInventory";
 
 class PlayerAccessories {
-	private inven: PlayerInventory;
-	public max: number;
-	public list: string[];
-
 	/**
 	 * Creates an accessory list according to the specified parameters
-	 * @param inven
+	 * @param inven Reference to inventory object to operate on
 	 * @param max number of accessories that can be equipped at once
 	 * @param list (optional, default: empty) manually configured list of initial accessories
 	 */
-	constructor(inven: PlayerInventory, max: number, list?: string[]) {
-		this.inven = inven;
-		this.list = list ?? [];
-		this.max = max;
-	}
+	constructor(
+		private inven: PlayerInventory,
+		public max: number,
+		public list: string[] = []
+	) {}
 
 	/**
 	 * If possible, equips the specified item as an accessory
