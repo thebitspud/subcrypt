@@ -7,13 +7,14 @@
 	let gameStarted = false;
 
 	setTimeout(() => (showTitle = true), 500);
-	setTimeout(() => (showAll = true), 5000);
+	setTimeout(() => (showAll = true), 4500);
 </script>
 
 <div class="MainContainer overflow-wrapper">
 	<div class="flex-overflow">
 		{#if showTitle}<TitlePage />{/if}
 		{#if showAll}
+			<br />
 			{#if gameStarted}
 				<GameContent />
 			{:else}

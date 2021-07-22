@@ -1,5 +1,5 @@
 <script lang="ts">
-	import typewriter from "../../scripts/utils/Typewriter";
+	import typewriter from "../../scripts/utils/typewriter";
 	import pkg from "../../../package.json";
 </script>
 

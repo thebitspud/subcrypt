@@ -19,7 +19,7 @@
 		{:else if $inspectTarget.type === "enemy"}
 			<p>What is this {$inspectTarget.id} supposed do? Kill me?</p>
 		{:else if $inspectTarget.type === "help"}
-			<p>
+			<p style="color: var(--border-color)">
 				Click on item, enemy, and ability names (usually colorful text) to learn
 				more about them!
 			</p>

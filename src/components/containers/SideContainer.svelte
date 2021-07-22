@@ -89,10 +89,10 @@
 
 	.tabs > button:not(.selected) {
 		border-bottom-width: 1px;
-		opacity: 45%;
+		opacity: 50%;
 	}
 
 	.tabs > button:not(.selected):hover {
-		opacity: 65%;
+		opacity: 70%;
 	}
 </style>

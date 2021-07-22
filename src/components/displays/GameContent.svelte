@@ -1,21 +1,19 @@
 <script lang="ts">
-	import EventEntry from "../fragments/EventFragment.svelte";
+	import EventFragment from "../fragments/EventFragment.svelte";
 	import SettingsDisplay from "../displays/SettingsDisplay.svelte";
-	import GameEvent from "../../scripts/events/GameEvent";
+	import { eventList, nextEvent } from "../../scripts/stores/eventList";
 
 	let showSettings = false;
-
-	const testEvent = new (class extends GameEvent {
-		setOptions(): void {
-			this.options = [];
-		}
-	})("When the impostor is suspicious", "red");
 </script>
 
 <div class="GameContent">
-	<br />
-	<EventEntry event={testEvent} bind:complete={showSettings} />
-	<br />
+	{#each $eventList as event, i}
+		<EventFragment {event} lastEvent={i === $eventList.length - 1} />
+		<br />
+	{:else}
+		<!-- Tricking eventList into correctly updating -->
+		{(() => ($eventList = [$nextEvent]))()}
+	{/each}
 	{#if showSettings}
 		<SettingsDisplay />
 	{/if}

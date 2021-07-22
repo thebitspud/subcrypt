@@ -19,6 +19,7 @@ const healthRegenTimer = setInterval(() => {
 	});
 }, 1000);
 
+/** Writable store for the player's resource stats */
 export const resources = writable<PlayerResources>({
 	health: new Resource(100),
 	energy: new Resource(100),
@@ -27,8 +28,11 @@ export const resources = writable<PlayerResources>({
 
 const inven = new PlayerInventory();
 
+/** Writable store for the player's inventory */
 export const inventory = writable(inven);
 
+/** Writable store for the player's active equipment */
 export const gear = writable(new PlayerGear(inven));
 
+/** Writable store for the player's active accessories */
 export const accessories = writable(new PlayerAccessories(inven, 3));
