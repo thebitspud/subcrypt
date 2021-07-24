@@ -58,7 +58,8 @@
 	}
 
 	.content {
-		width: min(20rem, 100%);
+		width: max(20rem, 80%);
+		max-width: 100%;
 		margin: 0 auto 0.5rem;
 	}
 

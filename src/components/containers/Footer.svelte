@@ -1,7 +1,11 @@
 <script lang="ts">
+	import { stateData } from "../../scripts/stores/stateData";
+
 	function openCredits() {}
 
-	function openSettings() {}
+	function openSettings() {
+		$stateData.showSettings = !$stateData.showSettings;
+	}
 
 	function save() {}
 
@@ -32,7 +36,8 @@
 		/* The negative bottom margin is for cancelling out the margin of the last row of flex items */
 	}
 
-	.Footer > * {
+	button.text,
+	a {
 		flex: 0 0 auto;
 		margin: 0 min(2rem, 5%) 0.5rem;
 		user-select: none;

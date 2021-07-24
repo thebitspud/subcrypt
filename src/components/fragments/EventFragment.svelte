@@ -11,13 +11,8 @@
 
 	function getTextColor(): string {
 		if (event.textColor === "default") return `var(--main-color)`;
-		if (event.text === "faint") return `var(--border-color)`;
+		if (event.textColor === "faint") return `var(--border-color)`;
 		return event.textColor;
-	}
-
-	function showButtons() {
-		event.setOptions();
-		complete = true;
 	}
 </script>
 
@@ -25,23 +20,36 @@
 	<div
 		class="text"
 		in:typewriter={{ speed: event.textSpeed, delay }}
-		on:introend={showButtons}
+		on:introend={() => (complete = true)}
 		style="color: {getTextColor()}"
 	>
-		{event.text}
+		{event.getText()}
 	</div>
 	<br />
 	{#if complete && lastEvent}
-		{#each event.options as option}
+		{#each event.getOptions() as option, i}
 			<button
+				class="text"
 				on:click={() => {
 					if (option.onClick) option.onClick();
 					if (option.clearEvents) {
 						$eventList = [];
 						$nextEvent = option.nextEvent;
 					} else $eventList = [...$eventList, option.nextEvent];
-				}}>{option.text}</button
+				}}>{i + 1}. {option.text}</button
 			>
+			<br />
 		{/each}
 	{/if}
 </div>
+
+<style>
+	.EventFragment {
+		text-align: left;
+	}
+
+	button.text {
+		user-select: none;
+		color: var(--option-color);
+	}
+</style>

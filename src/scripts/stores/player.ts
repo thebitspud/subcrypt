@@ -3,26 +3,41 @@ import Resource, { PlayerResources } from "../player/resources";
 import PlayerInventory from "../player/playerInventory";
 import PlayerGear from "../player/playerGear";
 import PlayerAccessories from "../player/playerAccessories";
+import { stateData } from "./stateData";
 
 // Temporary timers for resource regeneration
 const energyRegenTimer = setInterval(() => {
+	if (!canRegen()) return;
+
 	resources.update((resources) => {
 		resources.energy.adjust(1);
 		return resources;
 	});
-}, 300);
+}, 750);
 
 const healthRegenTimer = setInterval(() => {
+	if (!canRegen()) return;
+
 	resources.update((resources) => {
 		resources.health.adjust(1);
 		return resources;
 	});
-}, 1000);
+}, 2500);
+
+function canRegen(): boolean {
+	let regenActive = false;
+	stateData.update((state) => {
+		regenActive = state.gameActive;
+		return state;
+	});
+
+	return regenActive;
+}
 
 /** Writable store for the player's resource stats */
 export const resources = writable<PlayerResources>({
-	health: new Resource(100),
-	energy: new Resource(100),
+	health: new Resource(75, 100),
+	energy: new Resource(25, 100),
 	weight: new Resource(0, 25),
 });
 

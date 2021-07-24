@@ -35,7 +35,8 @@
 
 	.inspect-data {
 		text-align: left;
+		width: max(20rem, 80%);
+		max-width: 100%;
 		margin: auto;
-		width: min(20rem, 100%);
 	}
 </style>

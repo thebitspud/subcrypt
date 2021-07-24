@@ -30,7 +30,6 @@ const typewriter = (
 			const showCursor = cursor && i > 0 && i < text.length;
 			node.textContent = text.slice(0, i) + (showCursor ? "|" : "");
 		},
-		css: () => `white-space: pre`,
 	};
 };
 

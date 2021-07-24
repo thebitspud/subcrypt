@@ -23,6 +23,7 @@
 			--bg-color: #181818;
 			--border-color: #aaa;
 			--link-color: #28f;
+			--option-color: #0d0;
 		}
 	</style>
 {/if}
