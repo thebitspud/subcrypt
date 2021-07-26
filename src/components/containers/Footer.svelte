@@ -4,7 +4,7 @@
 	function openCredits() {}
 
 	function openSettings() {
-		$stateData.showSettings = !$stateData.showSettings;
+		$stateData.general.showSettings = !$stateData.general.showSettings;
 	}
 
 	function save() {}

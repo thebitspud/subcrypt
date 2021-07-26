@@ -13,20 +13,20 @@
 
 <div class="MainContainer overflow-wrapper">
 	<div class="flex-overflow">
-		{#if showTitle && !$stateData.gameActive}<TitlePage />{/if}
+		{#if showTitle && !$stateData.general.gameActive}<TitlePage />{/if}
 		{#if showAll}
 			<br />
-			{#if $stateData.gameActive}
+			{#if $stateData.general.gameActive}
 				<GameContent />
 			{:else}
 				<button
-					on:click={() => ($stateData.gameActive = true)}
+					on:click={() => ($stateData.general.gameActive = true)}
 					style="margin: 0.5rem auto 1rem">New Game</button
 				>
 			{/if}
 		{/if}
 
-		{#if $stateData.showSettings}
+		{#if $stateData.general.showSettings}
 			<SettingsDisplay />
 		{/if}
 	</div>

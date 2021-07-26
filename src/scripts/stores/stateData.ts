@@ -1,6 +1,16 @@
 import { writable } from "svelte/store";
 
-export const stateData = writable({
-	gameActive: false,
-	showSettings: false,
-});
+export const stateObject = {
+	general: {
+		gameActive: false,
+		showSettings: false,
+	},
+	intro: {
+		examinedGround: false,
+		examinedArea: false,
+		examinedSelf: false,
+		examinedLamp: false,
+	},
+};
+
+export const stateData = writable(stateObject);

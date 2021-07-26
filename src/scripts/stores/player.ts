@@ -27,7 +27,7 @@ const healthRegenTimer = setInterval(() => {
 function canRegen(): boolean {
 	let regenActive = false;
 	stateData.update((state) => {
-		regenActive = state.gameActive;
+		regenActive = state.general.gameActive;
 		return state;
 	});
 
