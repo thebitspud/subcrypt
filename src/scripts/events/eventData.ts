@@ -2,7 +2,11 @@ import GameEvent, { EventOption } from "./gameEvent";
 import { gear, inventory } from "../stores/player";
 import { stateObject as state } from "../stores/stateData";
 
-const eventData = {
+type EventMap = {
+	[key: string]: GameEvent;
+};
+
+const eventData: EventMap = {
 	intro_1: new (class extends GameEvent {
 		getText(): string {
 			return (

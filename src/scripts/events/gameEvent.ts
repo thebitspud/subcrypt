@@ -1,3 +1,4 @@
+/** Valid sets of colors for event text */
 type ColorProfile = "default" | "faint" | "red" | "blue" | "green" | "purple";
 
 /** Type for option buttons that play subsequent events when clicked */

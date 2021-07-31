@@ -5,6 +5,7 @@
 		gear,
 		accessories,
 	} from "../../../scripts/stores/player";
+	import ItemFragment from "../../fragments/ItemFragment.svelte";
 
 	function pickupGear() {
 		if (
@@ -17,7 +18,7 @@
 			$gear.setSlot("primary", "impostors-bane");
 		}
 
-		$gear.setSlot("head", "crewmate-helm");
+		$gear.setSlot("head", "chainmail_hood");
 		$gear.setSlot("body", "sus-proof-vest");
 		$gear.setSlot("legs", "amogus-pants");
 		$gear.setSlot("feet", "armored-drip");
@@ -36,16 +37,16 @@
 <div class="GearPanel">
 	<button on:click={pickupGear}>Pick up gear</button>
 	<br />
-	<p>Primary: {$gear.getSlot("primary") ?? ""}</p>
-	<p>Secondary: {$gear.getSlot("secondary") ?? ""}</p>
+	<p>Primary: <ItemFragment id={$gear.getSlot("primary")} /></p>
+	<p>Secondary: <ItemFragment id={$gear.getSlot("secondary")} /></p>
 	<br />
-	<p>Head: {$gear.getSlot("head") ?? ""}</p>
-	<p>Body: {$gear.getSlot("body") ?? ""}</p>
-	<p>Legs: {$gear.getSlot("legs") ?? ""}</p>
-	<p>Feet: {$gear.getSlot("feet") ?? ""}</p>
+	<p>Head: <ItemFragment id={$gear.getSlot("head")} /></p>
+	<p>Body: <ItemFragment id={$gear.getSlot("body")} /></p>
+	<p>Legs: <ItemFragment id={$gear.getSlot("legs")} /></p>
+	<p>Feet: <ItemFragment id={$gear.getSlot("feet")} /></p>
 	<br />
 	<p>Accessories: ({$accessories.list.length}/{$accessories.max})</p>
 	{#each $accessories.list as accessory}
-		<p>&nbsp;&nbsp;&nbsp;&nbsp;{accessory}</p>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;<ItemFragment id={accessory} /></p>
 	{/each}
 </div>

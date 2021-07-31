@@ -34,20 +34,31 @@ function canRegen(): boolean {
 	return regenActive;
 }
 
-/** Writable store for the player's resource stats */
-export const resources = writable<PlayerResources>({
-	health: new Resource(75, 100),
-	energy: new Resource(25, 100),
-	weight: new Resource(0, 25),
-});
-
 const inven = new PlayerInventory();
 
+/**
+ * Non-store reference object for all player data.
+ * Does not update Svelte DOM, so handle with caution.
+ */
+export const player = {
+	resources: {
+		health: new Resource(75, 100),
+		energy: new Resource(25, 100),
+		weight: new Resource(0, 25),
+	},
+	inventory: inven,
+	gear: new PlayerGear(inven),
+	accessories: new PlayerAccessories(inven, 3),
+};
+
+/** Writable store for the player's resource stats */
+export const resources = writable(player.resources);
+
 /** Writable store for the player's inventory */
-export const inventory = writable(inven);
+export const inventory = writable(player.inventory);
 
 /** Writable store for the player's active equipment */
-export const gear = writable(new PlayerGear(inven));
+export const gear = writable(player.gear);
 
 /** Writable store for the player's active accessories */
-export const accessories = writable(new PlayerAccessories(inven, 3));
+export const accessories = writable(player.accessories);

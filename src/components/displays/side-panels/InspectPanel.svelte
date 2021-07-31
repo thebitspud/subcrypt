@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { inspectTarget } from "../../../scripts/stores/inspectTarget";
 	import { settings } from "../../../scripts/stores/settings";
+	import itemData from "../../../scripts/items/itemData";
 
 	$: {
 		if ($settings.gameHints && !$inspectTarget.id) {
@@ -12,10 +13,17 @@
 </script>
 
 <div class="InspectPanel overflow-wrapper">
-	<p>Inspect</p>
+	{#if $inspectTarget.type === "item"}
+		<p>{itemData[$inspectTarget.id].name}</p>
+	{:else if $inspectTarget.type === "enemy"}
+		<p>Enemy</p>
+	{:else}
+		<p>Inspect</p>
+	{/if}
 	<div class="inspect-data flex-overflow">
 		{#if $inspectTarget.type === "item"}
-			<p>Nice {$inspectTarget.id} bro!</p>
+			<p>Weight: {itemData[$inspectTarget.id].weight}</p>
+			<p>{itemData[$inspectTarget.id].getDescription()}</p>
 		{:else if $inspectTarget.type === "enemy"}
 			<p>What is this {$inspectTarget.id} supposed do? Kill me?</p>
 		{:else if $inspectTarget.type === "help"}

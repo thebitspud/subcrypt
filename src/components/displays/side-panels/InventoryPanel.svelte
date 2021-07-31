@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { inventory as inven } from "../../../scripts/stores/player";
+	import ItemFragment from "../../fragments/ItemFragment.svelte";
 
 	function craft() {
 		if ($inven.hasItem("iron-longsword", 3)) {
@@ -19,7 +20,7 @@
 			else if (Math.random() < 1 / 7) $inven.addItem("task-list");
 		} else {
 			$inven.addItem("raw-iron-ore", 1);
-			if (Math.random() < 1 / 16) $inven.addItem("crewmate-helm");
+			if (Math.random() < 1 / 16) $inven.addItem("chainmail_hood");
 			else if (Math.random() < 1 / 25) $inven.addItem("sussy-charm");
 		}
 
@@ -36,7 +37,7 @@
 	<button on:click={hasheensheen}>Craft Many</button>
 	<br />
 	{#each [...$inven.items] as [id, qty]}
-		<p>{id}{@html qty !== 1 ? ` &times; ${qty}` : ""}</p>
+		<p><ItemFragment {id} />{@html qty !== 1 ? ` &times; ${qty}` : ""}</p>
 	{/each}
 </div>
 

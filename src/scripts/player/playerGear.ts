@@ -1,13 +1,9 @@
 /** Combination type consisting of all valid gear slot names */
 import type PlayerInventory from "./playerInventory";
 
-export type GearCategories =
-	| "primary"
-	| "secondary"
-	| "head"
-	| "body"
-	| "legs"
-	| "feet";
+export type ArmorSlots = "head" | "body" | "legs" | "feet";
+export type WeaponSlots = "primary" | "secondary";
+export type GearSlots = ArmorSlots | WeaponSlots;
 
 /** Utility class for managing the player's gear slots */
 class PlayerGear {
@@ -18,7 +14,7 @@ class PlayerGear {
 	 */
 	constructor(
 		private inven: PlayerInventory,
-		private slots = new Map<GearCategories, string>()
+		private slots = new Map<GearSlots, string>()
 	) {}
 
 	/** Returns the total number of items currently equipped */
@@ -30,7 +26,7 @@ class PlayerGear {
 	 * Returns the item currently equipped in the specified slot, or undefined if none
 	 * @param slot any valid gear category
 	 */
-	public getSlot(slot: GearCategories) {
+	public getSlot(slot: GearSlots) {
 		return this.slots.get(slot);
 	}
 
@@ -41,7 +37,7 @@ class PlayerGear {
 	 * @param slot any valid gear category
 	 * @param id item identifier
 	 */
-	public setSlot(slot: GearCategories, id: string) {
+	public setSlot(slot: GearSlots, id: string) {
 		if (!this.inven.hasItem(id)) return;
 
 		this.inven.removeItem(id, 1);
@@ -54,7 +50,7 @@ class PlayerGear {
 	 * <br>Successfully unequipping an item returns it to the player's general inventory
 	 * @param slot any valid gear category
 	 */
-	public removeSlot(slot: GearCategories) {
+	public removeSlot(slot: GearSlots) {
 		if (!this.slots.has(slot)) return;
 
 		this.inven.addItem(this.slots.get(slot));
