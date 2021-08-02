@@ -37,7 +37,10 @@
 	<button on:click={hasheensheen}>Craft Many</button>
 	<br />
 	{#each [...$inven.items] as [id, qty]}
-		<p><ItemFragment {id} />{@html qty !== 1 ? ` &times; ${qty}` : ""}</p>
+		<p>
+			<ItemFragment {id} hideInvalid={false} />
+			{@html qty !== 1 ? ` &times; ${qty}` : ""}
+		</p>
 	{/each}
 </div>
 

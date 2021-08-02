@@ -12,6 +12,7 @@ const itemData: ItemMap = {
 	})("Strange Tooth", 1, 10, "artifact"),
 
 	crude_oil_lamp: new (class extends Item {
+		readonly slot = "secondary";
 		getDescription(): string {
 			return "A roughly constructed but long-lasting oil lamp that provides only the barest amount of light.";
 		}
@@ -41,7 +42,7 @@ const itemData: ItemMap = {
 	})("Quartz Charm", 3, 35),
 
 	chainmail_hood: new (class extends Armor {
-		readonly armor = 5;
+		readonly protection = 5;
 		readonly slot = "head";
 
 		getDescription(): string {

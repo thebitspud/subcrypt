@@ -3,6 +3,7 @@ import type { ArmorSlots, WeaponSlots } from "../player/playerGear";
 type ItemCategory =
 	| "generic"
 	| "artifact"
+	| "material"
 	| "consumable"
 	| "armor"
 	| "weapon"
@@ -26,7 +27,7 @@ export abstract class Item {
 	) {}
 
 	/** Returns a generated string description for the item */
-	public abstract getDescription(plural?: string): string;
+	public abstract getDescription(): string;
 }
 
 /** Any item that has an on-use activated effect */
@@ -39,7 +40,7 @@ export abstract class Consumable extends Item {
 /** Any piece of equipable armor as an item */
 export abstract class Armor extends Item {
 	public readonly category: ItemCategory = "armor";
-	public abstract armor: number;
+	public abstract protection: number;
 	public abstract slot: ArmorSlots;
 	public whileActive() {}
 }

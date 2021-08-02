@@ -2,6 +2,13 @@
 	import { inspectTarget } from "../../../scripts/stores/inspectTarget";
 	import { settings } from "../../../scripts/stores/settings";
 	import itemData from "../../../scripts/items/itemData";
+	import {
+		Item,
+		Armor,
+		Weapon,
+		Accessory,
+		Consumable,
+	} from "../../../scripts/items/item";
 
 	$: {
 		if ($settings.gameHints && !$inspectTarget.id) {
@@ -10,11 +17,17 @@
 			$inspectTarget.type = "";
 		}
 	}
+
+	$: item = itemData[$inspectTarget.id] ?? itemData["error"];
+
+	function capitalize(s: string): string {
+		return s[0].toUpperCase() + s.slice(1).toLowerCase();
+	}
 </script>
 
 <div class="InspectPanel overflow-wrapper">
 	{#if $inspectTarget.type === "item"}
-		<p>{itemData[$inspectTarget.id].name}</p>
+		<p>{item.name}</p>
 	{:else if $inspectTarget.type === "enemy"}
 		<p>Enemy</p>
 	{:else}
@@ -22,10 +35,31 @@
 	{/if}
 	<div class="inspect-data flex-overflow">
 		{#if $inspectTarget.type === "item"}
-			<p>Weight: {itemData[$inspectTarget.id].weight}</p>
-			<p>{itemData[$inspectTarget.id].getDescription()}</p>
+			<!-- Inspecting an item -->
+			<p>
+				<!-- Item stats -->
+				Weight: {item.weight}
+				<br />Category: {capitalize(item.category)}
+				{#if item.slot}
+					<br />Slot: {capitalize(item.slot)}
+				{/if}
+				{#if item instanceof Armor}
+					<br />Protection: {item.protection}
+				{:else if item instanceof Weapon}
+					<br />Damage: {item.damage}
+					<br />Cooldown: {item.cooldown}s
+				{:else if item instanceof Accessory}
+					<br />Slot: Accessory
+				{:else if item instanceof Consumable}
+					<br />Single Use: {capitalize(item.singleUse)}
+				{/if}
+			</p>
+
+			<!-- Item description -->
+			<p>{item.getDescription()}</p>
 		{:else if $inspectTarget.type === "enemy"}
-			<p>What is this {$inspectTarget.id} supposed do? Kill me?</p>
+			<!-- Inspecting an enemy -->
+			<p>What is this {$inspectTarget.id} gonna do? Kill me?</p>
 		{:else if $inspectTarget.type === "help"}
 			<p style="color: var(--border-color)">
 				Click on item, enemy, and ability names (usually colorful text) to learn
