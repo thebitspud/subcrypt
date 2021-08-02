@@ -36,7 +36,7 @@ const itemData: ItemMap = {
 			// Player gains increased stamina regen after attacking
 		}
 
-		getDescription(plural?: string): string {
+		getDescription(): string {
 			return "A small, translucent gemstone that glows when squeezed.";
 		}
 	})("Quartz Charm", 3, 35),
@@ -55,7 +55,7 @@ const itemData: ItemMap = {
 
 	error: new (class extends Item {
 		getDescription(): string {
-			return "Item does not exist.";
+			return "ERROR: Invalid item.";
 		}
 	})("Error", 0, 0),
 };

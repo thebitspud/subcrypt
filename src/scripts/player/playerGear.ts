@@ -31,6 +31,18 @@ class PlayerGear {
 	}
 
 	/**
+	 * Returns true if the player has the specified item(s) in their inventory
+	 * @param id item identifier, or undefined to return false
+	 */
+	public hasItem(id: string): boolean {
+		for (let value of this.slots.values()) {
+			if (id === value) return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * If possible, equips the specified item in the specified slot
 	 * <br>Equipping an item removes it from the player's general inventory
 	 * <br>Only one item can be equipped per gear category

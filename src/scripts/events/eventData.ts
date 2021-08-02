@@ -1,5 +1,5 @@
 import GameEvent, { EventOption } from "./gameEvent";
-import { gear, inventory } from "../stores/player";
+import { gear, inventory, player } from "../stores/player";
 import { stateObject as state } from "../stores/stateData";
 
 type EventMap = {
@@ -61,9 +61,11 @@ const eventData: EventMap = {
 	})(),
 
 	intro_a2: new (class extends GameEvent {
-		getText(): string {
+		onPlay() {
 			state.intro.examinedGround = true;
+		}
 
+		getText(): string {
 			return (
 				"Your hands encounter something too smooth and light to be a rock. Upon holding and feeling " +
 				"it, you realize that the object is conical and curved to a sharp point."
@@ -91,12 +93,7 @@ const eventData: EventMap = {
 		getText(): string {
 			// Letting the player choose to equip or discard the tooth
 			// TODO: replace this with shorthand event function
-			let pickedUp = false;
-			inventory.update((inven) => {
-				pickedUp = inven.hasItem("strange_tooth");
-				return inven;
-			});
-
+			let pickedUp = hasItem("strange_tooth");
 			return (pickedUp ? "Acquired" : "Discarded") + " Strange Tooth";
 		}
 
@@ -125,9 +122,11 @@ const eventData: EventMap = {
 	})(),
 
 	intro_4: new (class extends GameEvent {
-		getText(): string {
+		onPlay() {
 			state.intro.examinedArea = true;
+		}
 
+		getText(): string {
 			return (
 				"While surveying the surrounding darkness, you notice a faint, flickering light emanating " +
 				"from some unknown source in the distance."
@@ -182,9 +181,11 @@ const eventData: EventMap = {
 	})(),
 
 	intro_passage_a1: new (class extends GameEvent {
-		getText(): string {
+		onPlay() {
 			state.intro.examinedSelf = true;
+		}
 
+		getText(): string {
 			return (
 				"Now illuminated by the lamp, you are able to get a better view of yourself. It appears " +
 				"that you are still dressed in the loose-fitting desert clothing you last remember, stained " +
@@ -193,15 +194,9 @@ const eventData: EventMap = {
 		}
 
 		getOptions(): EventOption[] {
-			let hasLamp = false;
-			inventory.update((inven) => {
-				hasLamp = inven.hasItem("crude_oil_lamp");
-				return inven;
-			});
-
 			return [
 				...(state.intro.examinedLamp
-					? hasLamp
+					? hasItem("crude_oil_lamp")
 						? []
 						: [{ text: "Take lamp", nextEvent: eventData.intro_passage_b2 }]
 					: [{ text: "Examine lamp", nextEvent: eventData.intro_passage_b1 }]),
@@ -211,9 +206,11 @@ const eventData: EventMap = {
 	})(),
 
 	intro_passage_b1: new (class extends GameEvent {
-		getText(): string {
+		onPlay() {
 			state.intro.examinedLamp = true;
+		}
 
+		getText(): string {
 			return (
 				"The lamp is modest and functional, consisting of nothing more than a primitive metal " +
 				"frame, a wick, and a fuel reservoir containing some dark, viscous oil. It hangs from a " +
@@ -233,7 +230,7 @@ const eventData: EventMap = {
 	})(),
 
 	intro_passage_b2: new (class extends GameEvent {
-		getText(): string {
+		onPlay() {
 			// Adding the lamp to the player's inventory
 			// TODO: replace this with shorthand function
 			inventory.update((inven) => {
@@ -245,7 +242,9 @@ const eventData: EventMap = {
 				gear.setSlot("secondary", "crude_oil_lamp");
 				return gear;
 			});
+		}
 
+		getText(): string {
 			return "Acquired Crude Oil Lamp";
 		}
 
@@ -261,16 +260,10 @@ const eventData: EventMap = {
 
 	intro_passage_2: new (class extends GameEvent {
 		getText(): string {
-			let hasLamp = false;
-			inventory.update((inven) => {
-				hasLamp = inven.hasItem("crude_oil_lamp");
-				return inven;
-			});
-
 			return (
 				"Further down the corridor are more lamps like the first, spaced roughly fifty steps " +
 				"apart. The illumination is paltry and inadequate, but " +
-				(hasLamp
+				(hasItem("crude_oil_lamp")
 					? "it is certainly preferable to nothing at all."
 					: "the lamp you are holding makes up for it.")
 			);
@@ -281,15 +274,15 @@ const eventData: EventMap = {
 		}
 	})(),
 
-	template_short: new (class extends GameEvent {
+	error: new (class extends GameEvent {
 		getText(): string {
-			return "";
+			return "ERROR: Invalid event.";
 		}
 
 		getOptions(): EventOption[] {
 			return [{ text: "Continue", nextEvent: eventData.template }];
 		}
-	})(),
+	})("red"),
 
 	template: new (class extends GameEvent {
 		getText(): string {
@@ -309,5 +302,9 @@ const eventData: EventMap = {
 		}
 	})("default", 25),
 };
+
+function hasItem(id: string): boolean {
+	return player.inventory.hasItem(id) || player.gear.hasItem(id);
+}
 
 export default eventData;

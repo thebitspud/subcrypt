@@ -28,6 +28,13 @@ abstract class GameEvent {
 	public abstract getText(): string;
 
 	/**
+	 * Optional single-use method that runs when an event is first played.
+	 * <br>Can be used in conjunction with EventOption.onClick(). In this scenario,
+	 * onPlay() is always triggered after onClick().
+	 */
+	public onPlay(): void {}
+
+	/**
 	 * Sets the event's options: one-shot buttons that play subsequent events when clicked
 	 * <br>This function is called when the event node finishes transitioning in
 	 */

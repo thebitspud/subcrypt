@@ -1,14 +1,15 @@
 <script lang="ts">
 	import { inspectTarget } from "../../../scripts/stores/inspectTarget";
 	import { settings } from "../../../scripts/stores/settings";
+	import { gear, inventory } from "../../../scripts/stores/player";
 	import itemData from "../../../scripts/items/itemData";
 	import {
-		Item,
 		Armor,
 		Weapon,
 		Accessory,
 		Consumable,
 	} from "../../../scripts/items/item";
+	import type { GearSlots } from "../../../scripts/player/playerGear";
 
 	$: {
 		if ($settings.gameHints && !$inspectTarget.id) {
@@ -22,6 +23,16 @@
 
 	function capitalize(s: string): string {
 		return s[0].toUpperCase() + s.slice(1).toLowerCase();
+	}
+
+	function equipItem() {
+		const slot: GearSlots = item?.slot;
+		if (!slot) return;
+
+		if ($gear.hasItem($inspectTarget.id)) $gear.removeSlot(slot);
+		else $gear.setSlot(slot, $inspectTarget.id);
+		gear.update((o) => o);
+		inventory.update((o) => o);
 	}
 </script>
 
@@ -40,9 +51,7 @@
 				<!-- Item stats -->
 				Weight: {item.weight}
 				<br />Category: {capitalize(item.category)}
-				{#if item.slot}
-					<br />Slot: {capitalize(item.slot)}
-				{/if}
+				{#if item.slot}<br />Slot: {capitalize(item.slot)}{/if}
 				{#if item instanceof Armor}
 					<br />Protection: {item.protection}
 				{:else if item instanceof Weapon}
@@ -57,6 +66,11 @@
 
 			<!-- Item description -->
 			<p>{item.getDescription()}</p>
+			{#if item.slot}
+				<button on:click={equipItem}>
+					{$gear.hasItem($inspectTarget.id) ? "Unequip" : "Equip"}
+				</button>
+			{/if}
 		{:else if $inspectTarget.type === "enemy"}
 			<!-- Inspecting an enemy -->
 			<p>What is this {$inspectTarget.id} gonna do? Kill me?</p>

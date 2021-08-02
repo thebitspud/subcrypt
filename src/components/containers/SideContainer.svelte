@@ -1,9 +1,9 @@
 <script lang="ts">
-	import InspectPanel from "../displays/side-panels/InspectPanel.svelte";
-	import InventoryPanel from "../displays/side-panels/InventoryPanel.svelte";
-	import StatsPanel from "../displays/side-panels/StatsPanel.svelte";
-	import SkillsPanel from "../displays/side-panels/SkillsPanel.svelte";
-	import GearPanel from "../displays/side-panels/GearPanel.svelte";
+	import InspectPanel from "../displays/inspect/InspectPanel.svelte";
+	import InventoryPanel from "../displays/tabs/InventoryPanel.svelte";
+	import StatsPanel from "../displays/tabs/StatsPanel.svelte";
+	import SkillsPanel from "../displays/tabs/SkillsPanel.svelte";
+	import GearPanel from "../displays/tabs/GearPanel.svelte";
 
 	// Tab keys and display values
 	type SidePanelTabs = "stats" | "gear" | "inventory" | "skills";

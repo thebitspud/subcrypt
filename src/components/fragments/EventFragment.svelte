@@ -36,6 +36,7 @@
 						$eventList = [];
 						$nextEvent = option.nextEvent;
 					} else $eventList = [...$eventList, option.nextEvent];
+					option.nextEvent.onPlay();
 				}}>{i + 1}. {option.text}</button
 			>
 			<br />
