@@ -21,6 +21,13 @@ const eventData: EventMap = {
 	})(),
 
 	intro_2: new (class extends GameEvent {
+		onPlay() {
+			inventory.update((inven) => {
+				inven.addItem("blunt_chisel");
+				return inven;
+			});
+		}
+
 		getText(): string {
 			return (
 				"Although your eyes are wide open, there is nothing to see. No dawn light, no night sky, " +
@@ -34,6 +41,13 @@ const eventData: EventMap = {
 	})(),
 
 	intro_3: new (class extends GameEvent {
+		onPlay() {
+			inventory.update((inven) => {
+				inven.addItem("quartz_charm");
+				return inven;
+			});
+		}
+
 		getText(): string {
 			return (
 				"Slowly, you raise yourself off the rugged stone floor and into a crouched position. Now " +
@@ -115,7 +129,7 @@ const eventData: EventMap = {
 		getOptions(): EventOption[] {
 			return [
 				...(state.intro.examinedArea
-					? [{ text: "To the light", nextEvent: eventData.intro_4 }]
+					? [{ text: "To the light", nextEvent: eventData.intro_5 }]
 					: [{ text: "Examine surroundings", nextEvent: eventData.intro_4 }]),
 			];
 		}
@@ -124,6 +138,11 @@ const eventData: EventMap = {
 	intro_4: new (class extends GameEvent {
 		onPlay() {
 			state.intro.examinedArea = true;
+
+			inventory.update((inven) => {
+				inven.addItem("chainmail_hood");
+				return inven;
+			});
 		}
 
 		getText(): string {
@@ -144,6 +163,13 @@ const eventData: EventMap = {
 	})(),
 
 	intro_5: new (class extends GameEvent {
+		onPlay() {
+			inventory.update((inven) => {
+				inven.addItem("healsprout", 5);
+				return inven;
+			});
+		}
+
 		getText(): string {
 			return (
 				"Still unsure of where you are and without any better ideas, you cautiously make your way " +

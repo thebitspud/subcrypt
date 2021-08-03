@@ -1,4 +1,5 @@
 import { Item, Armor, Weapon, Accessory, Consumable } from "./item";
+import { player, resources } from "../stores/player";
 
 type ItemMap = {
 	[key: string]: Item;
@@ -36,10 +37,36 @@ const itemData: ItemMap = {
 			// Player gains increased stamina regen after attacking
 		}
 
+		getEffectDesc(): string {
+			return "Regenerate 1 stamina every 2 seconds in combat.";
+		}
+
 		getDescription(): string {
 			return "A small, translucent gemstone that glows when squeezed.";
 		}
 	})("Quartz Charm", 3, 35),
+
+	healsprout: new (class extends Consumable {
+		singleUse = true;
+
+		onUse(): void {
+			resources.update((res) => {
+				res.health.adjust(5);
+				return res;
+			});
+		}
+
+		getUseDesc(): string {
+			return "Instantly restore 5 health.";
+		}
+
+		getDescription(): string {
+			return (
+				"A purple, vine-like herb renowned for its healing and magic-enhancing properties. " +
+				"It is typically found on the walls and ceilings of caves near underground energy sources."
+			);
+		}
+	})("Healsprout", 1, 10),
 
 	chainmail_hood: new (class extends Armor {
 		readonly protection = 5;

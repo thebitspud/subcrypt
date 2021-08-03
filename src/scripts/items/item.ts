@@ -35,6 +35,7 @@ export abstract class Consumable extends Item {
 	public readonly category: ItemCategory = "consumable";
 	public abstract singleUse: boolean = true;
 	public abstract onUse(): void;
+	public abstract getUseDesc(): string;
 }
 
 /** Any piece of equipable armor as an item */
@@ -59,4 +60,5 @@ export abstract class Weapon extends Item {
 export abstract class Accessory extends Item {
 	public readonly category: ItemCategory = "accessory";
 	public abstract whileActive(): void;
+	public abstract getEffectDesc(): string;
 }

@@ -20,7 +20,7 @@ class PlayerAccessories {
 	 * <br>Duplicate accessories cannot be equipped
 	 * @param id accessory identifier
 	 */
-	public add(id: string) {
+	public addItem(id: string) {
 		if (this.list.length >= this.max) return;
 		if (!this.inven.hasItem(id)) return;
 		if (this.list.findIndex((item) => item === id) !== -1) return;
@@ -34,7 +34,7 @@ class PlayerAccessories {
 	 * <br>Unequipping an accessory returns it to the player's general inventory
 	 * @param id accessory identifier
 	 */
-	public remove(id: string) {
+	public removeItem(id: string) {
 		const itemIndex = this.list.findIndex((item) => item === id);
 		if (itemIndex === -1) return;
 
@@ -46,12 +46,8 @@ class PlayerAccessories {
 	 * Returns true if the player has the specified accessory equipped
 	 * @param id accessory identifier
 	 */
-	public has(id: string): boolean {
-		for (const item in this.list) {
-			if (item === id) return true;
-		}
-
-		return false;
+	public hasItem(id: string): boolean {
+		return this.list.includes(id);
 	}
 
 	/** Returns true if all of the player's accessory slots have been filled */

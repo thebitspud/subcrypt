@@ -52,7 +52,7 @@ export const player = {
 };
 
 /** Writable store for the player's resource stats */
-export const resources = writable(player.resources);
+export const resources = writable<PlayerResources>(player.resources);
 
 /** Writable store for the player's inventory */
 export const inventory = writable(player.inventory);
