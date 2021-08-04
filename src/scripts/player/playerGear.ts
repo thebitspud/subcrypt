@@ -14,13 +14,8 @@ class PlayerGear {
 	 */
 	constructor(
 		private inven: PlayerInventory,
-		private slots = new Map<GearSlots, string>()
+		public slots = new Map<GearSlots, string>()
 	) {}
-
-	/** Returns the total number of items currently equipped */
-	public count() {
-		return this.slots.size;
-	}
 
 	/**
 	 * Returns the item currently equipped in the specified slot, or undefined if none

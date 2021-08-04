@@ -16,11 +16,12 @@
 				if (option.clearEvents) {
 					$eventList = [];
 					$nextEvent = option.nextEvent ?? eventData.error;
-				} else
+				} else {
 					$eventList = [
 						...$eventList,
 						...(option.nextEvent ? [option.nextEvent] : []),
 					];
+				}
 			}}>{i + 1}. {option.text}</button
 		>
 		<br />

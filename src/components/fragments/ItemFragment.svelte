@@ -31,7 +31,7 @@
 			class="text"
 			on:click={inspectItem}
 			style="color: {id === 'error' ? 'red' : 'var(--main-color)'}"
-			transition:typewriter={{ speed: useTypewriter ? 25 : 0 }}
+			in:typewriter={{ speed: useTypewriter ? 25 : 0 }}
 			on:introend={() => (complete = true)}>{item.name}</button
 		>
 	</div>

@@ -1,7 +1,13 @@
 <script lang="ts">
-	import { resources, gear } from "../../../scripts/stores/player";
+	import {
+		resources,
+		gear,
+		inventory,
+		accessories,
+	} from "../../../scripts/stores/player";
 	import Resource from "../../../scripts/player/resources";
 	import ItemFragment from "../../fragments/ItemFragment.svelte";
+	import itemData from "../../../scripts/items/itemData";
 
 	function modifyStats() {
 		if ($resources.health.now >= 10) {
@@ -17,6 +23,24 @@
 
 	function getResourceString(res: Resource): string {
 		return `${Math.round(res.now)} / ${Math.round(res.max)}`;
+	}
+
+	$: {
+		let weight = 0;
+
+		for (let [id, count] of $inventory.items) {
+			weight += (itemData[id]?.weight ?? 0) * count;
+		}
+
+		for (let id of $gear.slots.values()) {
+			weight += itemData[id]?.weight ?? 0;
+		}
+
+		for (let id of $accessories.list) {
+			weight += itemData[id]?.weight ?? 0;
+		}
+
+		$resources.weight.now = weight;
 	}
 </script>
 

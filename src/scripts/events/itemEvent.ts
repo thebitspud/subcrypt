@@ -1,6 +1,7 @@
 import GameEvent, { EventOption } from "./gameEvent";
-import { inventory } from "../stores/player";
+import { inventory, player } from "../stores/player";
 import { inspectTarget } from "../stores/inspectTarget";
+import itemData from "../items/itemData";
 
 class ItemEvent extends GameEvent {
 	/**
@@ -60,9 +61,15 @@ export function itemEventOptions(
 		},
 	};
 
+	const hasInvenSpace: boolean =
+		(player.resources.weight.now + itemData[id]?.weight ?? 0) <=
+		player.resources.weight.max;
+
 	return [
 		...(canInspect ? [inspectOption] : []),
-		{ text: "Pick up", nextEvent: new ItemEvent(id, true, options) },
+		...(hasInvenSpace || !canDiscard
+			? [{ text: "Pick up", nextEvent: new ItemEvent(id, true, options) }]
+			: []),
 		...(canDiscard
 			? [{ text: "Discard", nextEvent: new ItemEvent(id, false, options) }]
 			: []),
