@@ -3,12 +3,13 @@
 	import GameContent from "../displays/GameContent.svelte";
 	import SettingsDisplay from "../displays/SettingsDisplay.svelte";
 	import { stateData } from "../../scripts/stores/stateData";
+	import { fade } from "svelte/transition";
 
 	let showTitle = false;
 	let showAll = false;
 
 	setTimeout(() => (showTitle = true), 500);
-	setTimeout(() => (showAll = true), 4500);
+	setTimeout(() => (showAll = true), 3500);
 </script>
 
 <div class="MainContainer overflow-wrapper">
@@ -21,7 +22,8 @@
 			{:else}
 				<button
 					on:click={() => ($stateData.general.gameActive = true)}
-					style="margin: 0.5rem auto 1rem">New Game</button
+					style="margin: 0.5rem auto 1rem"
+					in:fade>New Game</button
 				>
 			{/if}
 		{/if}

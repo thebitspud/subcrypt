@@ -1,10 +1,16 @@
 /** Valid sets of colors for event text */
-type ColorProfile = "default" | "faint" | "red" | "blue" | "green" | "purple";
+export type ColorProfile =
+	| "default"
+	| "faint"
+	| "red"
+	| "blue"
+	| "green"
+	| "purple";
 
 /** Type for option buttons that play subsequent events when clicked */
 export type EventOption = {
 	text: string;
-	nextEvent: GameEvent;
+	nextEvent: GameEvent | undefined;
 	clearEvents?: boolean;
 	onClick?: () => void;
 };
@@ -28,15 +34,9 @@ abstract class GameEvent {
 	public abstract getText(): string;
 
 	/**
-	 * Optional single-use method that runs when an event is first played.
-	 * <br>Can be used in conjunction with EventOption.onClick(). In this scenario,
-	 * onPlay() is always triggered after onClick().
-	 */
-	public onPlay(): void {}
-
-	/**
 	 * Sets the event's options: one-shot buttons that play subsequent events when clicked
 	 * <br>This function is called when the event node finishes transitioning in
+	 * <br>Single-use code blocks can be placed here to activate when the buttons appear.
 	 */
 	public abstract getOptions(): EventOption[];
 

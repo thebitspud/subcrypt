@@ -37,8 +37,8 @@ function canRegen(): boolean {
 const inven = new PlayerInventory();
 
 /**
- * Non-store reference object for all player data.
- * Does not update Svelte DOM, so handle with caution.
+ * Up-to-date non-store reference object for all player data.
+ * Will not update Svelte DOM when interacted with, so handle with caution.
  */
 export const player = {
 	resources: {

@@ -38,13 +38,13 @@ const itemData: ItemMap = {
 		}
 
 		getEffectDesc(): string {
-			return "Regenerate 1 stamina every 2 seconds in combat.";
+			return "While in combat, regenerate 1 stamina per second.";
 		}
 
 		getDescription(): string {
-			return "A small, translucent gemstone that glows when squeezed.";
+			return "A translucent gemstone that glows when squeezed.";
 		}
-	})("Quartz Charm", 3, 35),
+	})("Quartz Charm", 2, 35),
 
 	healsprout: new (class extends Consumable {
 		singleUse = true;
@@ -78,7 +78,7 @@ const itemData: ItemMap = {
 				"heavier blows will still hurt."
 			);
 		}
-	})("Chainmail Hood", 10, 50),
+	})("Chainmail Hood", 8, 50),
 
 	error: new (class extends Item {
 		getDescription(): string {

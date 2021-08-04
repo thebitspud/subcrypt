@@ -1,6 +1,7 @@
 import GameEvent, { EventOption } from "./gameEvent";
 import { gear, inventory, player } from "../stores/player";
 import { stateObject as state } from "../stores/stateData";
+import { itemEventOptions } from "./itemEvent";
 
 type EventMap = {
 	[key: string]: GameEvent;
@@ -21,13 +22,6 @@ const eventData: EventMap = {
 	})(),
 
 	intro_2: new (class extends GameEvent {
-		onPlay() {
-			inventory.update((inven) => {
-				inven.addItem("blunt_chisel");
-				return inven;
-			});
-		}
-
 		getText(): string {
 			return (
 				"Although your eyes are wide open, there is nothing to see. No dawn light, no night sky, " +
@@ -36,18 +30,16 @@ const eventData: EventMap = {
 		}
 
 		getOptions(): EventOption[] {
+			inventory.update((inven) => {
+				inven.addItem("blunt_chisel");
+				return inven;
+			});
+
 			return [{ text: "Get up", nextEvent: eventData.intro_3 }];
 		}
 	})(),
 
 	intro_3: new (class extends GameEvent {
-		onPlay() {
-			inventory.update((inven) => {
-				inven.addItem("quartz_charm");
-				return inven;
-			});
-		}
-
 		getText(): string {
 			return (
 				"Slowly, you raise yourself off the rugged stone floor and into a crouched position. Now " +
@@ -57,6 +49,11 @@ const eventData: EventMap = {
 		}
 
 		getOptions(): EventOption[] {
+			inventory.update((inven) => {
+				inven.addItem("quartz_charm");
+				return inven;
+			});
+
 			return [
 				{ text: "Examine surroundings", nextEvent: eventData.intro_4 },
 				{ text: "Examine ground", nextEvent: eventData.intro_a1 },
@@ -75,10 +72,6 @@ const eventData: EventMap = {
 	})(),
 
 	intro_a2: new (class extends GameEvent {
-		onPlay() {
-			state.intro.examinedGround = true;
-		}
-
 		getText(): string {
 			return (
 				"Your hands encounter something too smooth and light to be a rock. Upon holding and feeling " +
@@ -87,41 +80,18 @@ const eventData: EventMap = {
 		}
 
 		getOptions(): EventOption[] {
-			return [
-				{
-					text: "Pocket it",
-					nextEvent: eventData.intro_a3,
-					onClick: () => {
-						inventory.update((inven) => {
-							inven.addItem("strange_tooth");
-							return inven;
-						});
-					},
-				},
-				{ text: "Discard it", nextEvent: eventData.intro_a3 },
-			];
+			state.intro.examinedGround = true;
+
+			return itemEventOptions("strange_tooth", [
+				{ text: "Keep searching", nextEvent: eventData.intro_a3 },
+				...(state.intro.examinedArea
+					? [{ text: "To the light", nextEvent: eventData.intro_5 }]
+					: [{ text: "Examine surroundings", nextEvent: eventData.intro_4 }]),
+			]);
 		}
 	})(),
 
 	intro_a3: new (class extends GameEvent {
-		getText(): string {
-			// Letting the player choose to equip or discard the tooth
-			// TODO: replace this with shorthand event function
-			let pickedUp = hasItem("strange_tooth");
-			return (pickedUp ? "Acquired" : "Discarded") + " Strange Tooth";
-		}
-
-		getOptions(): EventOption[] {
-			return [
-				{ text: "Keep searching", nextEvent: eventData.intro_a4 },
-				...(state.intro.examinedArea
-					? [{ text: "To the light", nextEvent: eventData.intro_5 }]
-					: [{ text: "Examine surroundings", nextEvent: eventData.intro_4 }]),
-			];
-		}
-	})("faint"),
-
-	intro_a4: new (class extends GameEvent {
 		getText(): string {
 			return "It is too dark here. You probe the earth some more, but do not find anything of interest.";
 		}
@@ -136,15 +106,6 @@ const eventData: EventMap = {
 	})(),
 
 	intro_4: new (class extends GameEvent {
-		onPlay() {
-			state.intro.examinedArea = true;
-
-			inventory.update((inven) => {
-				inven.addItem("chainmail_hood");
-				return inven;
-			});
-		}
-
 		getText(): string {
 			return (
 				"While surveying the surrounding darkness, you notice a faint, flickering light emanating " +
@@ -153,6 +114,12 @@ const eventData: EventMap = {
 		}
 
 		getOptions(): EventOption[] {
+			state.intro.examinedArea = true;
+			inventory.update((inven) => {
+				inven.addItem("chainmail_hood");
+				return inven;
+			});
+
 			return [
 				...(state.intro.examinedGround
 					? []
@@ -163,13 +130,6 @@ const eventData: EventMap = {
 	})(),
 
 	intro_5: new (class extends GameEvent {
-		onPlay() {
-			inventory.update((inven) => {
-				inven.addItem("healsprout", 5);
-				return inven;
-			});
-		}
-
 		getText(): string {
 			return (
 				"Still unsure of where you are and without any better ideas, you cautiously make your way " +
@@ -178,6 +138,11 @@ const eventData: EventMap = {
 		}
 
 		getOptions(): EventOption[] {
+			inventory.update((inven) => {
+				inven.addItem("healsprout", 5);
+				return inven;
+			});
+
 			return [
 				{
 					text: "Continue",
@@ -207,10 +172,6 @@ const eventData: EventMap = {
 	})(),
 
 	intro_passage_a1: new (class extends GameEvent {
-		onPlay() {
-			state.intro.examinedSelf = true;
-		}
-
 		getText(): string {
 			return (
 				"Now illuminated by the lamp, you are able to get a better view of yourself. It appears " +
@@ -220,6 +181,8 @@ const eventData: EventMap = {
 		}
 
 		getOptions(): EventOption[] {
+			state.intro.examinedSelf = true;
+
 			return [
 				...(state.intro.examinedLamp
 					? hasItem("crude_oil_lamp")
@@ -232,10 +195,6 @@ const eventData: EventMap = {
 	})(),
 
 	intro_passage_b1: new (class extends GameEvent {
-		onPlay() {
-			state.intro.examinedLamp = true;
-		}
-
 		getText(): string {
 			return (
 				"The lamp is modest and functional, consisting of nothing more than a primitive metal " +
@@ -245,6 +204,8 @@ const eventData: EventMap = {
 		}
 
 		getOptions(): EventOption[] {
+			state.intro.examinedLamp = true;
+
 			return [
 				{ text: "Take lamp", nextEvent: eventData.intro_passage_b2 },
 				...(state.intro.examinedSelf
@@ -256,7 +217,11 @@ const eventData: EventMap = {
 	})(),
 
 	intro_passage_b2: new (class extends GameEvent {
-		onPlay() {
+		getText(): string {
+			return "You lift the lamp off the hook and hold it ahead as you continue walking down the passage.";
+		}
+
+		getOptions(): EventOption[] {
 			// Adding the lamp to the player's inventory
 			// TODO: replace this with shorthand function
 			inventory.update((inven) => {
@@ -268,13 +233,7 @@ const eventData: EventMap = {
 				gear.setSlot("secondary", "crude_oil_lamp");
 				return gear;
 			});
-		}
 
-		getText(): string {
-			return "Acquired Crude Oil Lamp";
-		}
-
-		getOptions(): EventOption[] {
 			return [
 				...(state.intro.examinedSelf
 					? []
@@ -282,7 +241,7 @@ const eventData: EventMap = {
 				{ text: "Keep walking", nextEvent: eventData.intro_passage_2 },
 			];
 		}
-	})("faint"),
+	})(),
 
 	intro_passage_2: new (class extends GameEvent {
 		getText(): string {
@@ -290,8 +249,8 @@ const eventData: EventMap = {
 				"Further down the corridor are more lamps like the first, spaced roughly fifty steps " +
 				"apart. The illumination is paltry and inadequate, but " +
 				(hasItem("crude_oil_lamp")
-					? "it is certainly preferable to nothing at all."
-					: "the lamp you are holding makes up for it.")
+					? "the lamp you are holding makes up for it."
+					: "it is certainly preferable to nothing at all.")
 			);
 		}
 

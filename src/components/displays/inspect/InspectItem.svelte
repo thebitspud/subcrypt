@@ -55,6 +55,7 @@
 		<br />Weight: {item.weight}
 		{#if item.slot}<br />Slot: {capitalize(item.slot)}{/if}
 	</p>
+
 	{#if item instanceof Armor}
 		<p>Protection: {item.protection}</p>
 	{:else if item instanceof Weapon}
