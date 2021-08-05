@@ -1,4 +1,4 @@
-import type { ArmorSlots, WeaponSlots } from "../player/playerGear";
+import type { ArmorSlots, GearSlots } from "../player/playerGear";
 
 type ItemCategory =
 	| "generic"
@@ -33,9 +33,15 @@ export abstract class Item {
 /** Any item that has an on-use activated effect */
 export abstract class Consumable extends Item {
 	public readonly category: ItemCategory = "consumable";
-	public abstract singleUse: boolean = true;
+	public readonly singleUse = true;
 	public abstract onUse(): void;
 	public abstract getUseDesc(): string;
+}
+
+/** Any tool that can equipped in the secondary slot */
+export abstract class Tool extends Item {
+	public readonly category: ItemCategory = "tool";
+	public readonly slot: GearSlots = "secondary";
 }
 
 /** Any piece of equipable armor as an item */
@@ -49,9 +55,9 @@ export abstract class Armor extends Item {
 /** Any equipable weapon or tool with combat capabilities */
 export abstract class Weapon extends Item {
 	public readonly category: ItemCategory = "weapon";
+	public readonly slot: GearSlots = "primary";
 	public abstract damage: number;
 	public abstract cooldown: number;
-	public abstract slot: WeaponSlots;
 	public onAttack() {}
 	public whileActive() {}
 }

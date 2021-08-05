@@ -14,13 +14,23 @@
 </script>
 
 <div class="InspectPanel overflow-wrapper">
-	{#if $inspectTarget.type === "item"}
-		<p>{itemData[$inspectTarget.id].name ?? itemData["error"].name}</p>
-	{:else if $inspectTarget.type === "unit"}
-		<p>Unit</p>
-	{:else}
-		<p>Inspect</p>
+	{#if $inspectTarget.type !== "help" && $inspectTarget.type !== ""}
+		<button
+			class="text closeButton"
+			on:click={() => ($inspectTarget = { type: "", id: "" })}>&#9587;</button
+		>
 	{/if}
+
+	<p>
+		{#if $inspectTarget.type === "item"}
+			{itemData[$inspectTarget.id].name ?? itemData["error"].name}
+		{:else if $inspectTarget.type === "unit"}
+			Unit
+		{:else}
+			Inspect
+		{/if}
+	</p>
+
 	<div class="inspect-data flex-overflow">
 		{#if $inspectTarget.type === "item"}
 			<InspectItem id={$inspectTarget.id} />
@@ -28,7 +38,7 @@
 			<!-- Inspecting a unit -->
 			<p>What is this {$inspectTarget.id} gonna do? Kill me?</p>
 		{:else if $inspectTarget.type === "help"}
-			<p style="color: var(--border-color)">
+			<p style="color: var(--border-color); text-align: center">
 				Click on item, unit, and ability names to learn more about them!
 			</p>
 		{/if}
@@ -37,6 +47,7 @@
 
 <style>
 	.InspectPanel {
+		position: relative;
 		padding: 0.5rem;
 		outline: var(--border-color) 1px solid;
 	}
@@ -46,5 +57,15 @@
 		width: max(20rem, 80%);
 		max-width: 100%;
 		margin: auto;
+	}
+
+	.closeButton {
+		color: var(--main-color);
+		line-height: 100%;
+		user-select: none;
+
+		position: absolute;
+		right: 0.5rem;
+		top: 0.5rem;
 	}
 </style>

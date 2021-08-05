@@ -4,7 +4,7 @@
 </script>
 
 <div class="$inventoryPanel">
-	{#each [...$inven.items] as [id, qty]}
+	{#each [...$inven.items] as [id, qty] (id)}
 		<p>
 			<ItemFragment {id} hideInvalid={false} />
 			{@html qty !== 1 ? ` &times; ${qty}` : ""}

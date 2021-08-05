@@ -2,8 +2,7 @@
 import type PlayerInventory from "./playerInventory";
 
 export type ArmorSlots = "head" | "body" | "legs" | "feet";
-export type WeaponSlots = "primary" | "secondary";
-export type GearSlots = ArmorSlots | WeaponSlots;
+export type GearSlots = ArmorSlots | "primary" | "secondary";
 
 /** Utility class for managing the player's gear slots */
 class PlayerGear {

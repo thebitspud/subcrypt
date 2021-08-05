@@ -1,5 +1,5 @@
-import { Item, Armor, Weapon, Accessory, Consumable } from "./item";
-import { player, resources } from "../stores/player";
+import { Item, Armor, Weapon, Accessory, Consumable, Tool } from "./item";
+import { resources } from "../stores/player";
 
 type ItemMap = {
 	[key: string]: Item;
@@ -12,17 +12,15 @@ const itemData: ItemMap = {
 		}
 	})("Strange Tooth", 1, 10, "artifact"),
 
-	crude_oil_lamp: new (class extends Item {
-		readonly slot = "secondary";
+	crude_oil_lamp: new (class extends Tool {
 		getDescription(): string {
 			return "A roughly constructed but long-lasting oil lamp that provides only the barest amount of light.";
 		}
-	})("Crude Oil Lamp", 5, 20, "tool"),
+	})("Crude Oil Lamp", 5, 20),
 
 	blunt_chisel: new (class extends Weapon {
 		readonly cooldown = 1.0;
 		readonly damage = 4;
-		readonly slot = "secondary";
 
 		getDescription(): string {
 			return (
@@ -47,8 +45,6 @@ const itemData: ItemMap = {
 	})("Quartz Charm", 2, 35),
 
 	healsprout: new (class extends Consumable {
-		singleUse = true;
-
 		onUse(): void {
 			resources.update((res) => {
 				res.health.adjust(5);

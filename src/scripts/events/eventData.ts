@@ -17,6 +17,11 @@ const eventData: EventMap = {
 		}
 
 		getOptions(): EventOption[] {
+			inventory.update((inven) => {
+				inven.addItem("healsprout", 5);
+				return inven;
+			});
+
 			return [{ text: "Continue", nextEvent: eventData.intro_2 }];
 		}
 	})(),
