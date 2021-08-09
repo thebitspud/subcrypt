@@ -15,7 +15,7 @@
 	let button: HTMLButtonElement;
 
 	afterUpdate(() => {
-		button?.innerText = item.name;
+		if (complete) button?.innerText = item.name;
 	});
 
 	function inspectItem() {

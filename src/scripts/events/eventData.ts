@@ -1,13 +1,9 @@
 import GameEvent, { EventOption } from "./gameEvent";
 import { gear, inventory, player } from "../stores/player";
 import { stateObject as state } from "../stores/stateData";
-import { itemEventOptions } from "./itemEvent";
+import ItemEvent, { itemEventOptions } from "./itemEvent";
 
-type EventMap = {
-	[key: string]: GameEvent;
-};
-
-const eventData: EventMap = {
+const eventData = {
 	intro_1: new (class extends GameEvent {
 		getText(): string {
 			return (
@@ -221,21 +217,19 @@ const eventData: EventMap = {
 		}
 	})(),
 
-	intro_passage_b2: new (class extends GameEvent {
-		getText(): string {
-			return "You lift the lamp off the hook and hold it ahead as you continue walking down the passage.";
-		}
-
+	intro_passage_b2: new (class extends ItemEvent {
+		/**
+		 * Adds the lamp to the player's secondary gear slot
+		 * @override
+		 */
 		getOptions(): EventOption[] {
-			// Adding the lamp to the player's inventory
-			// TODO: replace this with shorthand function
 			inventory.update((inven) => {
-				inven.addItem("crude_oil_lamp");
+				inven.addItem(this.id);
 				return inven;
 			});
 
 			gear.update((gear) => {
-				gear.setSlot("secondary", "crude_oil_lamp");
+				gear.setSlot("secondary", this.id);
 				return gear;
 			});
 
@@ -246,7 +240,7 @@ const eventData: EventMap = {
 				{ text: "Keep walking", nextEvent: eventData.intro_passage_2 },
 			];
 		}
-	})(),
+	})("crude_oil_lamp", true, []),
 
 	intro_passage_2: new (class extends GameEvent {
 		getText(): string {
@@ -256,6 +250,63 @@ const eventData: EventMap = {
 				(hasItem("crude_oil_lamp")
 					? "the lamp you are holding makes up for it."
 					: "it is certainly preferable to nothing at all.")
+			);
+		}
+
+		getOptions(): EventOption[] {
+			return [{ text: "Continue", nextEvent: eventData.intro_passage_3 }];
+		}
+	})(),
+
+	intro_passage_3: new (class extends GameEvent {
+		getText(): string {
+			return (
+				"The sounds of your footsteps echo lightly off the walls, punctuated by the occasional " +
+				"water droplet hitting the floor. For a brief moment, a faint scratching sound can be " +
+				"heard from further down the passage."
+			);
+		}
+
+		getOptions(): EventOption[] {
+			return [
+				{ text: "Stop and listen", nextEvent: eventData.intro_passage_c1 },
+				{ text: "Keep walking", nextEvent: eventData.intro_passage_4 },
+			];
+		}
+	})(),
+
+	intro_passage_c1: new (class extends GameEvent {
+		getText(): string {
+			return "You stop walking and listen intently, but the noise does not return.";
+		}
+
+		getOptions(): EventOption[] {
+			return [{ text: "Keep walking", nextEvent: eventData.intro_passage_4 }];
+		}
+	})(),
+
+	intro_passage_4: new (class extends GameEvent {
+		getText(): string {
+			return (
+				"Opposite the fourth lamp you cross is some sort of bladed implement jammed into a " +
+				"crevice in the wall. Its worn wooden handle sticks out of the fissure, parallel to the " +
+				"ground."
+			);
+		}
+
+		getOptions(): EventOption[] {
+			return [
+				{ text: "Pry it out", nextEvent: eventData.intro_passage_d1 },
+				{ text: "Ignore it", nextEvent: eventData.template },
+			];
+		}
+	})(),
+
+	intro_passage_d1: new (class extends GameEvent {
+		getText(): string {
+			return (
+				"It takes a while, but you are able to wrest the tool out of the crevice. It is a " +
+				"scratched up and dirt-stained chisel, with edges blunt from use."
 			);
 		}
 
