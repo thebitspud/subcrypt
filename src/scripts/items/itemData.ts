@@ -24,13 +24,13 @@ const itemData: ItemMap = {
 
 		getDescription(): string {
 			return (
-				"A worn carving chisel abandoned by some unknown entity. Can be used as a bladed weapon, " +
-				"though doing so probably isn't very effective."
+				"A scratched up and dirt-stained chisel, with edges blunt from use. Can be used as a " +
+				"bladed weapon, though it probably won't be very effective."
 			);
 		}
 	})("Blunt Chisel", 3, 10),
 
-	quartz_charm: new (class extends Accessory {
+	topaz_charm: new (class extends Accessory {
 		whileActive(): void {
 			// Player gains increased stamina regen after attacking
 		}
@@ -42,7 +42,7 @@ const itemData: ItemMap = {
 		getDescription(): string {
 			return "A translucent gemstone that glows when squeezed.";
 		}
-	})("Quartz Charm", 2, 35),
+	})("Topaz Charm", 2, 35),
 
 	healsprout: new (class extends Consumable {
 		onUse(): void {

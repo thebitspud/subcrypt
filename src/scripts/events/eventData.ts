@@ -7,7 +7,7 @@ const eventData = {
 	intro_1: new (class extends GameEvent {
 		getText(): string {
 			return (
-				"You wake up on your back, breathing heavily and covered with sweat. As you come to your " +
+				"You wake up on your back, breathing heavily and covered in sweat. As you come to your " +
 				"senses, a feeling of dread and panic sets in."
 			);
 		}
@@ -18,7 +18,7 @@ const eventData = {
 				return inven;
 			});
 
-			return [{ text: "Continue", nextEvent: eventData.intro_2 }];
+			return [{ text: "Where am I?", nextEvent: eventData.intro_2 }];
 		}
 	})(),
 
@@ -158,7 +158,7 @@ const eventData = {
 		getText(): string {
 			return (
 				"You arrive at the light source without incident. It is a lamp situated on the right side " +
-				"of a corridor crudely carved out of the surrounding stone. The passage is just tall enough " +
+				"of a tunnel crudely carved out of the surrounding stone. The passage is just tall enough " +
 				"for you to walk through without having to duck."
 			);
 		}
@@ -245,8 +245,8 @@ const eventData = {
 	intro_passage_2: new (class extends GameEvent {
 		getText(): string {
 			return (
-				"Further down the corridor are more lamps like the first, spaced roughly fifty steps " +
-				"apart. The illumination is paltry and inadequate, but " +
+				"Further down the meandering passage are more lamps like the first, spaced roughly fifty " +
+				"steps apart. The illumination is paltry and inadequate, but " +
 				(hasItem("crude_oil_lamp")
 					? "the lamp you are holding makes up for it."
 					: "it is certainly preferable to nothing at all.")
@@ -254,7 +254,13 @@ const eventData = {
 		}
 
 		getOptions(): EventOption[] {
-			return [{ text: "Continue", nextEvent: eventData.intro_passage_3 }];
+			return [
+				{
+					text: "Continue",
+					nextEvent: eventData.intro_passage_3,
+					clearEvents: true,
+				},
+			];
 		}
 	})(),
 
@@ -263,14 +269,17 @@ const eventData = {
 			return (
 				"The sounds of your footsteps echo lightly off the walls, punctuated by the occasional " +
 				"water droplet hitting the floor. For a brief moment, a faint scratching sound can be " +
-				"heard from further down the passage."
+				"heard from further down the tunnel."
 			);
 		}
 
 		getOptions(): EventOption[] {
 			return [
 				{ text: "Stop and listen", nextEvent: eventData.intro_passage_c1 },
-				{ text: "Keep walking", nextEvent: eventData.intro_passage_4 },
+				{
+					text: "Keep walking",
+					nextEvent: eventData.intro_passage_4,
+				},
 			];
 		}
 	})(),
@@ -281,7 +290,12 @@ const eventData = {
 		}
 
 		getOptions(): EventOption[] {
-			return [{ text: "Keep walking", nextEvent: eventData.intro_passage_4 }];
+			return [
+				{
+					text: "Keep walking",
+					nextEvent: eventData.intro_passage_4,
+				},
+			];
 		}
 	})(),
 
@@ -297,21 +311,106 @@ const eventData = {
 		getOptions(): EventOption[] {
 			return [
 				{ text: "Pry it out", nextEvent: eventData.intro_passage_d1 },
-				{ text: "Ignore it", nextEvent: eventData.template },
+				{
+					text: "Ignore it",
+					nextEvent: eventData.intro_passage_5,
+					clearEvents: true,
+				},
 			];
 		}
 	})(),
 
 	intro_passage_d1: new (class extends GameEvent {
 		getText(): string {
+			return "It takes a while, but you are able to wrest the tool out of the crevice.";
+		}
+
+		getOptions(): EventOption[] {
+			return [{ text: "Continue", nextEvent: eventData.intro_passage_d2 }];
+		}
+	})(),
+
+	intro_passage_d2: new (class extends ItemEvent {
+		getOptions(): EventOption[] {
+			inventory.update((inven) => {
+				inven.addItem(this.id);
+				return inven;
+			});
+
+			gear.update((gear) => {
+				gear.setSlot("primary", this.id);
+				return gear;
+			});
+
+			return [
+				{
+					text: "Keep walking",
+					nextEvent: eventData.intro_passage_5,
+					clearEvents: true,
+				},
+			];
+		}
+	})("blunt_chisel", true, []),
+
+	intro_passage_5: new (class extends GameEvent {
+		getText(): string {
 			return (
-				"It takes a while, but you are able to wrest the tool out of the crevice. It is a " +
-				"scratched up and dirt-stained chisel, with edges blunt from use."
+				"Eventually, the tunnel opens up into a small room with piles of stone fragments " +
+				"heaped up against the walls. In the center is a tall lamp post which lights up the " +
+				"surrounding area."
 			);
 		}
 
 		getOptions(): EventOption[] {
-			return [{ text: "Continue", nextEvent: eventData.template }];
+			return [
+				{ text: "Examine lamp post", nextEvent: eventData.intro_passage_e1 },
+				{ text: "Examine surroundings", nextEvent: eventData.intro_passage_6 },
+			];
+		}
+	})(),
+
+	intro_passage_e1: new (class extends GameEvent {
+		getText(): string {
+			return (
+				"The lamp post is rusting but sturdy, planted solidly into the cold stone floor. " +
+				"The light it emits is far brighter than that of the wall lamps in the passage."
+			);
+		}
+
+		getOptions(): EventOption[] {
+			return [
+				{ text: "Examine surroundings", nextEvent: eventData.intro_passage_6 },
+			];
+		}
+	})(),
+
+	intro_passage_6: new (class extends GameEvent {
+		getText(): string {
+			return (
+				"On the right side of the room is an opening partially blocked by a large mound of " +
+				"stones and debris."
+			);
+		}
+
+		getOptions(): EventOption[] {
+			return [{ text: "Try to cross", nextEvent: eventData.intro_passage_7 }];
+		}
+	})(),
+
+	intro_passage_7: new (class extends GameEvent {
+		getText(): string {
+			return (
+				"As you attempt to maneuver past it, the pile starts moving on its own. It reveals itself " +
+				"to be a small sediment golem, the work of an amateur artificer."
+			);
+		}
+
+		getOptions(): EventOption[] {
+			return [
+				{ text: "Fight", nextEvent: eventData.error },
+				{ text: "Flee", nextEvent: eventData.error },
+				{ text: "Negotiate", nextEvent: eventData.error },
+			];
 		}
 	})(),
 
@@ -321,7 +420,7 @@ const eventData = {
 		}
 
 		getOptions(): EventOption[] {
-			return [{ text: "Continue", nextEvent: eventData.template }];
+			return [{ text: "Continue", nextEvent: eventData.error }];
 		}
 	})("red"),
 
@@ -344,6 +443,10 @@ const eventData = {
 	})("default", 25),
 };
 
+/**
+ * Returns true if the specified item is in the player's inventory or gear
+ * @param id item identifier string
+ */
 function hasItem(id: string): boolean {
 	return player.inventory.hasItem(id) || player.gear.hasItem(id);
 }

@@ -7,7 +7,7 @@
 <div class="TitlePage">
 	<h1 in:typewriter={{ speed: 125, cursor: true }}>subcrypt</h1>
 	<p>
-		<span in:fade={{ delay: 1200 }}>A text-based adventure by </span><a
+		<span in:fade={{ delay: 1200 }}>A text adventure by </span><a
 			draggable="false"
 			href="https://github.com/thebitspud"
 			rel="noreferrer"
